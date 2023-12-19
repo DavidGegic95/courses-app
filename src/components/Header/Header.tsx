@@ -7,7 +7,7 @@ const Header = () => {
 	return (
 		<header>
 			<Logo />
-			<Button title='Logout' />
+			<Button buttonText='Logout' />
 		</header>
 	);
 };

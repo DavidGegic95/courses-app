@@ -1,0 +1,8 @@
+.courses_component {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	row-gap: 32px;
+	padding: 0 10%;
+}

@@ -2,6 +2,7 @@
 import './App.css';
 // import CourseInfo from './components/CourseInfo/CourseInfo';
 import Courses from './components/Courses/components/Courses';
+import EmptyCourseList from './components/EmptyCourseList/EmptyCourseList';
 import Header from './components/Header/Header';
 
 // type CourseInfoType = {
@@ -20,8 +21,15 @@ function App() {
 	return (
 		<div className='App'>
 			<Header />
-			{/* {!courseInfoState ? <Courses /> : <CourseInfo />} */}
-			<Courses />
+			{/* {!courseInfoState ? ( */}
+			<Courses
+			//  setCourseInfoState={setCourseInfoState}
+			/>
+			{/* ) : (
+				<CourseInfo />
+			)} */}
+			{/* <Courses /> */}
+			<EmptyCourseList />
 		</div>
 	);
 }

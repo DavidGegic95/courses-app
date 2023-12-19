@@ -28,7 +28,7 @@
 	height: 100%;
 }
 .title_course_card {
-	font-family: 'Open Sans';
+	font-family: 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 700;
 	font-size: 20px;
@@ -40,7 +40,7 @@
 }
 
 .description_course_card {
-	font-family: 'Open Sans';
+	font-family: 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -51,7 +51,7 @@
 }
 
 .authors_course_card {
-	font-family: 'Open Sans';
+	font-family: 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -80,7 +80,7 @@
 	border-radius: 4px;
 	outline: none;
 	border: none;
-	font-family: 'Open Sans';
+	font-family: 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 700;
 	font-size: 16px;

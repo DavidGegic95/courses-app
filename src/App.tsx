@@ -19,10 +19,15 @@ function App() {
 	const [courseInfoState, setCourseInfoState] = useState<CourseInfoType | null>(
 		null
 	);
+	// eslint-disable-next-line
+	const [courseList, setCourseList] = useState(mockedCoursesList);
 	return (
 		<div className='App'>
 			<Header />
-			{!courseInfoState ? (
+
+			{courseList.length === 0 ? (
+				<EmptyCourseList />
+			) : !courseInfoState ? (
 				<Courses
 					mockedCoursesList={mockedCoursesList}
 					setCourseInfoState={setCourseInfoState}
@@ -33,7 +38,6 @@ function App() {
 					courseInfoState={courseInfoState}
 				/>
 			)}
-			<EmptyCourseList />
 		</div>
 	);
 }

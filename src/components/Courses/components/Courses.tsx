@@ -24,7 +24,7 @@ const Courses = ({
 	setCourseInfoState,
 }: {
 	mockedCoursesList: mockedCourse[];
-	setCourseInfoState: (arr: CourseInfoType) => void;
+	setCourseInfoState: (arr: CourseInfoType | null) => void;
 }) => {
 	return (
 		<div className='courses_component'>

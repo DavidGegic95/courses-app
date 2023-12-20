@@ -57,18 +57,8 @@ const CourseCard = ({
 	duration: number;
 	authors: string[];
 	courseId: string;
-	setCourseInfoState: (arr: CourseInfoType) => void;
+	setCourseInfoState: (arr: CourseInfoType | null) => void;
 }) => {
-	function onClickSetCourse() {
-		setCourseInfoState({
-			IdOfCourse: courseId,
-			title: title,
-			description: description,
-			duration: duration,
-			listOfAuthors: authors,
-			creationDate: creationDate,
-		});
-	}
 	return (
 		<div className='course_card'>
 			<p className='title_course_card'>{title}</p>
@@ -95,7 +85,15 @@ const CourseCard = ({
 					</p>
 					<div className='buttons-wrapper_course_card'>
 						<Button
-							onClickSet={onClickSetCourse}
+							courseInfo={{
+								IdOfCourse: courseId,
+								title: title,
+								description: description,
+								duration: duration,
+								listOfAuthors: authors,
+								creationDate: creationDate,
+							}}
+							setCourseInfoState={setCourseInfoState}
 							name='button_show_course'
 							buttonText='Show Course'
 						/>

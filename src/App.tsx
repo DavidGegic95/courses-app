@@ -28,7 +28,10 @@ function App() {
 					setCourseInfoState={setCourseInfoState}
 				/>
 			) : (
-				<CourseInfo />
+				<CourseInfo
+					setCourseInfoState={setCourseInfoState}
+					courseInfoState={courseInfoState}
+				/>
 			)}
 			<EmptyCourseList />
 		</div>

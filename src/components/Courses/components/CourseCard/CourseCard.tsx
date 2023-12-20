@@ -20,7 +20,7 @@ function format(num: number): string {
 }
 
 function formatDate(date: string): string {
-	return date.replaceAll('/', '.');
+	return date?.replaceAll('/', '.');
 }
 
 function selectAuthor(authorID: string): string {
@@ -33,6 +33,14 @@ function selectAuthor(authorID: string): string {
 
 	return authorName;
 }
+type CourseInfoType = {
+	IdOfCourse: string;
+	title: string;
+	description: string;
+	duration: number;
+	listOfAuthors: string[];
+	creationDate: string;
+};
 
 const CourseCard = ({
 	title,
@@ -40,13 +48,27 @@ const CourseCard = ({
 	creationDate,
 	duration,
 	authors,
+	courseId,
+	setCourseInfoState,
 }: {
 	title: string;
 	description: string;
 	creationDate: string;
 	duration: number;
 	authors: string[];
+	courseId: string;
+	setCourseInfoState: (arr: CourseInfoType) => void;
 }) => {
+	function onClickSetCourse() {
+		setCourseInfoState({
+			IdOfCourse: courseId,
+			title: title,
+			description: description,
+			duration: duration,
+			listOfAuthors: authors,
+			creationDate: creationDate,
+		});
+	}
 	return (
 		<div className='course_card'>
 			<p className='title_course_card'>{title}</p>
@@ -72,7 +94,11 @@ const CourseCard = ({
 						{formatDate(creationDate)}
 					</p>
 					<div className='buttons-wrapper_course_card'>
-						<Button name='button_show_course' buttonText='Show Course' />
+						<Button
+							onClickSet={onClickSetCourse}
+							name='button_show_course'
+							buttonText='Show Course'
+						/>
 						<TrashIcon />
 						<EditIcon />
 					</div>

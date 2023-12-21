@@ -4,6 +4,7 @@ import { mockedAuthorsList } from '../../../../constants';
 import Button from '../../../../common/Button/Button';
 import { ReactComponent as TrashIcon } from '../../../../assets/Icon-Trash.svg';
 import { ReactComponent as EditIcon } from '../../../../assets/Icon-Edit.svg';
+import { useNavigate } from 'react-router-dom';
 
 function formatDuration(duration: number): string {
 	const hh: number = Math.floor(duration / 60);
@@ -33,14 +34,14 @@ function selectAuthor(authorID: string): string {
 
 	return authorName;
 }
-type CourseInfoType = {
-	IdOfCourse: string;
-	title: string;
-	description: string;
-	duration: number;
-	listOfAuthors: string[];
-	creationDate: string;
-};
+// type CourseInfoType = {
+// 	IdOfCourse: string;
+// 	title: string;
+// 	description: string;
+// 	duration: number;
+// 	listOfAuthors: string[];
+// 	creationDate: string;
+// };
 
 const CourseCard = ({
 	title,
@@ -49,7 +50,7 @@ const CourseCard = ({
 	duration,
 	authors,
 	courseId,
-	setCourseInfoState,
+	// setCourseInfoState,
 }: {
 	title: string;
 	description: string;
@@ -57,8 +58,9 @@ const CourseCard = ({
 	duration: number;
 	authors: string[];
 	courseId: string;
-	setCourseInfoState: (arr: CourseInfoType | null) => void;
+	// setCourseInfoState: (arr: CourseInfoType | null) => void;
 }) => {
+	const navigate = useNavigate();
 	return (
 		<div className='course_card'>
 			<p className='title_course_card'>{title}</p>
@@ -85,15 +87,16 @@ const CourseCard = ({
 					</p>
 					<div className='buttons-wrapper_course_card'>
 						<Button
-							courseInfo={{
-								IdOfCourse: courseId,
-								title: title,
-								description: description,
-								duration: duration,
-								listOfAuthors: authors,
-								creationDate: creationDate,
-							}}
-							setCourseInfoState={setCourseInfoState}
+							// courseInfo={{
+							// 	IdOfCourse: courseId,
+							// 	title: title,
+							// 	description: description,
+							// 	duration: duration,
+							// 	listOfAuthors: authors,
+							// 	creationDate: creationDate,
+							// }}
+							// setCourseInfoState={setCourseInfoState}
+							onClick={() => navigate(`/courses/${courseId}`)}
 							name='button_show_course'
 							buttonText='Show Course'
 						/>

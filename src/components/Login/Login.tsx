@@ -65,9 +65,8 @@ const Login = () => {
 				return res.json();
 			})
 			.then((data) => {
-				console.log(data);
 				localStorage.setItem('token', data.result);
-				navigate('/');
+				navigate('/courses');
 			})
 			.catch((error) => {
 				console.error('Error:', error.message);

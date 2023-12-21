@@ -25,8 +25,9 @@ const SearchBar = ({
 	return (
 		<div className='searchBar'>
 			<Input
-				setSearchQuery={setSearchQuery}
-				searchQuery={searchQuery}
+				inputName='input_search_bar'
+				handleInputData={setSearchQuery}
+				inputData={searchQuery}
 				placeholder='Input text'
 			/>
 			<SearchButton

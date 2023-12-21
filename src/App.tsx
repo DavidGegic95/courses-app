@@ -22,7 +22,7 @@ function App() {
 	// eslint-disable-next-line
 	const [courseList, setCourseList] = useState(mockedCoursesList);
 	return (
-		<div className='App'>
+		<div className='app'>
 			<Header />
 
 			{courseList.length === 0 ? (

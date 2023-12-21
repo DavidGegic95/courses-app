@@ -1,47 +1,12 @@
 import React from 'react';
-import './courseCard.css';
-import { mockedAuthorsList } from '../../../../constants';
 import Button from '../../../../common/Button/Button';
 import { ReactComponent as TrashIcon } from '../../../../assets/Icon-Trash.svg';
 import { ReactComponent as EditIcon } from '../../../../assets/Icon-Edit.svg';
 import { useNavigate } from 'react-router-dom';
-
-function formatDuration(duration: number): string {
-	const hh: number = Math.floor(duration / 60);
-	const mm: number = duration % 60;
-	return `${format(hh)}:${format(mm)} hours`;
-}
-
-function format(num: number): string {
-	if (num < 10) {
-		return `0${num}`;
-	} else {
-		return `${num}`;
-	}
-}
-
-function formatDate(date: string): string {
-	return date?.replaceAll('/', '.');
-}
-
-function selectAuthor(authorID: string): string {
-	let authorName = '';
-	for (const element of mockedAuthorsList) {
-		if (authorID === element.id) {
-			authorName = element.name;
-		}
-	}
-
-	return authorName;
-}
-// type CourseInfoType = {
-// 	IdOfCourse: string;
-// 	title: string;
-// 	description: string;
-// 	duration: number;
-// 	listOfAuthors: string[];
-// 	creationDate: string;
-// };
+import { formatDuration } from '../../../../helpers/getCourseDuration';
+import { formatDate } from '../../../../helpers/formatCreationDate';
+import { selectAuthor } from '../../../../helpers/selectAuthorsFormat';
+import './courseCard.css';
 
 const CourseCard = ({
 	title,
@@ -50,7 +15,6 @@ const CourseCard = ({
 	duration,
 	authors,
 	courseId,
-	// setCourseInfoState,
 }: {
 	title: string;
 	description: string;
@@ -58,7 +22,6 @@ const CourseCard = ({
 	duration: number;
 	authors: string[];
 	courseId: string;
-	// setCourseInfoState: (arr: CourseInfoType | null) => void;
 }) => {
 	const navigate = useNavigate();
 	return (
@@ -79,7 +42,7 @@ const CourseCard = ({
 					</p>
 					<p className='authors_course_card'>
 						<span>Duration: </span>
-						{formatDuration(duration)}
+						{formatDuration(duration)} hours
 					</p>
 					<p className='authors_course_card'>
 						<span>Created: </span>
@@ -87,15 +50,6 @@ const CourseCard = ({
 					</p>
 					<div className='buttons-wrapper_course_card'>
 						<Button
-							// courseInfo={{
-							// 	IdOfCourse: courseId,
-							// 	title: title,
-							// 	description: description,
-							// 	duration: duration,
-							// 	listOfAuthors: authors,
-							// 	creationDate: creationDate,
-							// }}
-							// setCourseInfoState={setCourseInfoState}
 							onClick={() => navigate(`/courses/${courseId}`)}
 							name='button_show_course'
 							buttonText='Show Course'

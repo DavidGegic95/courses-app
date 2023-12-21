@@ -2,26 +2,9 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import { mockedAuthorsList, mockedCoursesList } from '../../constants';
-
+import { formatDuration } from '../../helpers/getCourseDuration';
+import { formatDate } from '../../helpers/formatCreationDate';
 import './courseInfo.css';
-
-function formatDuration(duration: number): string {
-	const hh: number = Math.floor(duration / 60);
-	const mm: number = duration % 60;
-	return `${format(hh)}:${format(mm)}`;
-}
-
-function format(num: number): string {
-	if (num < 10) {
-		return `0${num}`;
-	} else {
-		return `${num}`;
-	}
-}
-
-function formatDate(date: string): string {
-	return date?.replaceAll('/', '.');
-}
 
 function selectAuthor(authorID: string): string {
 	let authorName = '';

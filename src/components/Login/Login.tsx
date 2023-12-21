@@ -8,7 +8,6 @@ type UserRegistration = {
 
 const Login = () => {
 	const navigate = useNavigate();
-	// eslint-disable-next-line
 	const [formData, setFormData] = useState<UserRegistration>({
 		password: '',
 		email: '',
@@ -70,7 +69,6 @@ const Login = () => {
 			})
 			.catch((error) => {
 				console.error('Error:', error.message);
-				// Handle errors here (e.g., show an error message to the user)
 			});
 	}
 	return (

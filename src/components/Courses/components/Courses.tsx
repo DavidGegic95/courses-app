@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
 import { mockedCoursesList } from '../../../constants';
@@ -18,6 +18,11 @@ const Courses = () => {
 		mockedCoursesList
 	);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	useEffect(() => {
+		if (searchQuery === '') {
+			setCourseList(mockedCoursesList);
+		}
+	}, [searchQuery]);
 
 	return (
 		<div className='courses_component'>
@@ -36,7 +41,6 @@ const Courses = () => {
 			{courseList?.length !== 0 ? (
 				courseList?.map((e) => (
 					<CourseCard
-						// setCourseInfoState={setCourseInfoState}
 						key={e.id}
 						courseId={e.id}
 						title={e.title}

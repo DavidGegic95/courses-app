@@ -1,16 +1,46 @@
 import React, { ChangeEvent, useState } from 'react';
 import CreateInput from '../../common/CreateInput/CreateInput';
 import './createCourse.css';
+import { formatDuration } from '../../helpers/getCourseDuration';
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../../common/Button/Button';
+type Author = {
+	id: string;
+	name: string;
+};
 
 const CreateCourse = () => {
 	const [courseData, setCourseData] = useState({
-		id: '',
+		id: uuidv4(),
 		title: '',
 		description: '',
 		creationDate: '',
 		duration: 0,
-		authors: [],
+		authors: [] as unknown as Author[],
 	});
+
+	const [singleAuthor, setSingleAuthor] = useState({
+		name: '',
+		id: uuidv4(),
+	});
+	const addAuthor = (newAuthor: Author) => {
+		setCourseData((prevData) => ({
+			...prevData,
+			authors: [...prevData.authors, newAuthor],
+		}));
+		setSingleAuthor({
+			name: '',
+			id: uuidv4(),
+		});
+	};
+
+	const handleAuthorInputChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		const { value } = e.target;
+		const newDataAuthor = { ...singleAuthor, name: value };
+		setSingleAuthor(newDataAuthor);
+	};
 
 	const handleInputChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -64,7 +94,9 @@ const CreateCourse = () => {
 						value={courseData.duration}
 						onChange={handleInputChange}
 					/>
-					<span className='duration_format'>00:00 hours</span>
+					<span className='duration_format'>
+						{formatDuration(courseData.duration)} hours
+					</span>
 				</div>
 				<p className='titles_container_createCourse'>Authors</p>
 				<div className='authors_container'>
@@ -73,8 +105,13 @@ const CreateCourse = () => {
 						placeholder='Input author'
 						label='Author name'
 						type='text'
-						value={''}
-						onChange={handleInputChange}
+						value={singleAuthor.name}
+						onChange={handleAuthorInputChange}
+					/>
+					<Button
+						onClick={() => addAuthor(singleAuthor)}
+						name='create_author_button'
+						buttonText='Create Author'
 					/>
 					<div>
 						<p className='titles_container_createCourse'>Course Author</p>
@@ -83,7 +120,12 @@ const CreateCourse = () => {
 						</span>
 					</div>
 				</div>
-				<p className='title_authorsList'>Authors list</p>
+				<div className='constainer_authorsList'>
+					<p className='title_authorsList'>Authors list:</p>
+					{courseData.authors.map((e: Author) => {
+						return <span>{e.name}</span>;
+					})}
+				</div>
 			</div>
 		</div>
 	);

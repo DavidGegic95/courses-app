@@ -65,6 +65,7 @@ const Login = () => {
 			})
 			.then((data) => {
 				localStorage.setItem('token', data.result);
+				localStorage.setItem('user', data.user.name);
 				navigate('/courses');
 			})
 			.catch((error) => {

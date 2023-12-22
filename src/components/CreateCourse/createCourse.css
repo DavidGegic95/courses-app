@@ -105,6 +105,33 @@
 
 .authors_container {
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	justify-content: space-between;
+}
+
+.create_author_button {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 13px 36px;
+	gap: 10px;
+	background: #007298;
+	border-radius: 4px;
+	height: 50px;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 24px;
+	text-align: center;
+	text-transform: uppercase;
+	color: #ffffff;
+	border: none;
+}
+
+.constainer_authorsList {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
 }

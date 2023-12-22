@@ -21,3 +21,19 @@ header {
 	outline: none;
 	padding: 13px 36px;
 }
+
+.logout_user_wrapper {
+	display: flex;
+	align-items: center;
+	column-gap: 16px;
+}
+
+.user_name {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: right;
+	color: #333e48;
+}

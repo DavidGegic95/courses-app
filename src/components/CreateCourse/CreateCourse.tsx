@@ -6,12 +6,15 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 import { newDate } from '../../helpers/newDate';
+import { mockedCoursesList } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 type Author = {
 	id: string;
 	name: string;
 };
 
 const CreateCourse = () => {
+	const navigate = useNavigate();
 	const [authorsList, setAuthorsList] = useState([] as Author[]);
 
 	const [singleAuthor, setSingleAuthor] = useState({
@@ -25,6 +28,15 @@ const CreateCourse = () => {
 		creationDate: newDate(),
 		duration: 0,
 		authors: [] as unknown as Author[],
+	});
+	// eslint-disable-next-line
+	const [errors, setErrors] = useState({
+		id: '',
+		title: '',
+		description: '',
+		creationDate: '',
+		duration: '',
+		authors: '',
 	});
 
 	const addAuthorToList = (newAuthor: Author) => {
@@ -74,23 +86,51 @@ const CreateCourse = () => {
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		const { id, value } = e.target;
-		setCourseData({
-			...courseData,
-			[id]: value,
-		});
-		console.log(courseData);
+		if (id === 'duration' && parseFloat(value) <= 0) {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				[id]: 'Duration must be greater than 0',
+			}));
+		} else {
+			setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
+			setCourseData({
+				...courseData,
+				[id]: value,
+			});
+		}
+
 		setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
 	};
 
-	// eslint-disable-next-line
-	const [errors, setErrors] = useState({
-		id: '',
-		title: '',
-		description: '',
-		creationDate: '',
-		duration: 0,
-		authors: [],
-	});
+	const createCourse = () => {
+		const titleValidation = courseData.title.length >= 2;
+		const descriptionValidation = courseData.description.length >= 2;
+		const durationValidation = courseData.duration > 0;
+		if (titleValidation && descriptionValidation && durationValidation) {
+			const authorsId = courseData.authors.map((e) => e.id);
+			mockedCoursesList.push({ ...courseData, authors: authorsId });
+			navigate('/courses');
+		} else {
+			if (!titleValidation) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					title: 'Title is required.',
+				}));
+			}
+			if (!descriptionValidation) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					description: 'Description is required.',
+				}));
+			}
+			if (!(courseData.duration > 0)) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					duration: 'Duration is required.',
+				}));
+			}
+		}
+	};
 
 	return (
 		<div className='createCourse_page'>
@@ -105,6 +145,7 @@ const CreateCourse = () => {
 					value={courseData.title}
 					onChange={handleInputChange}
 				/>
+				{errors.title && <p>{errors.title}</p>}
 				<CreateInput
 					id='description'
 					placeholder='Input description'
@@ -113,16 +154,22 @@ const CreateCourse = () => {
 					value={courseData.description}
 					onChange={handleInputChange}
 				/>
+				{errors.description && <p>{errors.description}</p>}
+
 				<p className='titles_container_createCourse'>Duration</p>
 				<div className='duration_container'>
-					<CreateInput
-						id='duration'
-						placeholder='Input duration'
-						label='Duration'
-						type='number'
-						value={courseData.duration}
-						onChange={handleInputChange}
-					/>
+					<div>
+						<CreateInput
+							id='duration'
+							placeholder='Input duration'
+							label='Duration'
+							type='number'
+							value={courseData.duration}
+							onChange={handleInputChange}
+						/>
+						{errors.duration && <p>{errors.duration}</p>}
+					</div>
+
 					<span className='duration_format'>
 						{formatDuration(courseData.duration)} hours
 					</span>
@@ -152,6 +199,7 @@ const CreateCourse = () => {
 							courseData.authors.map((e) => {
 								return (
 									<AuthorItem
+										key={e.id}
 										onClickAuthors={() => removeAuthor(e.id)}
 										name={e.name}
 										type='courseAuthors'
@@ -166,6 +214,7 @@ const CreateCourse = () => {
 					{authorsList.map((e: Author) => {
 						return (
 							<AuthorItem
+								key={e.id}
 								onClickAuthors={() => addAuthor(e.id)}
 								type='authorsList'
 								name={e.name}
@@ -173,6 +222,18 @@ const CreateCourse = () => {
 						);
 					})}
 				</div>
+			</div>
+			<div className='cancel_create_buttons_container'>
+				<Button
+					onClick={() => navigate('/courses')}
+					name='cancel_button__createCourse'
+					buttonText='CANCEL'
+				/>
+				<Button
+					onClick={createCourse}
+					name='create_course_button__createCourse'
+					buttonText='CREATE COURSE'
+				/>
 			</div>
 		</div>
 	);

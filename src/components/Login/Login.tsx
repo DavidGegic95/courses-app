@@ -59,7 +59,11 @@ const Login = () => {
 		})
 			.then((res) => {
 				if (!res.ok) {
-					throw new Error(`HTTP error! Status: ${res.status}`);
+					setErrors({
+						email: 'Invalid username or password',
+						password: 'Invalid username or password',
+					});
+					throw new Error('Invalid username or password');
 				}
 				return res.json();
 			})
@@ -87,7 +91,7 @@ const Login = () => {
 							id='email'
 							value={formData.email}
 							onChange={handleInputChange}
-							className='email'
+							className={`email ${errors.email ? 'error' : ''}`}
 							placeholder='Enter your email'
 						/>
 						<p style={{ color: 'red' }}>{errors.email}</p>
@@ -102,7 +106,7 @@ const Login = () => {
 							id='password'
 							value={formData.password}
 							onChange={handleInputChange}
-							className='password'
+							className={`password  ${errors.password ? 'error' : ''}`}
 							placeholder='Enter your password'
 						/>
 						<p style={{ color: 'red' }}>{errors.password}</p>

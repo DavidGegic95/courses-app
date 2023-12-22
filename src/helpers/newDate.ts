@@ -6,6 +6,5 @@ export function newDate() {
 	const formattedDate = `${day < 10 ? '0' : ''}${day}/${
 		month < 10 ? '0' : ''
 	}${month}/${year}`;
-	console.log(formattedDate);
 	return formattedDate;
 }

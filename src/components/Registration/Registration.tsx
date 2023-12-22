@@ -49,6 +49,7 @@ const Registration = () => {
 			fetchData();
 		}
 	};
+
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData({
@@ -97,7 +98,7 @@ const Registration = () => {
 							id='name'
 							value={formData.name}
 							onChange={handleInputChange}
-							className='name'
+							className={`name ${errors.name ? 'error' : ''}`}
 							placeholder='Enter your name'
 						/>
 						<p style={{ color: 'red' }}>{errors.name}</p>
@@ -112,7 +113,7 @@ const Registration = () => {
 							id='email'
 							value={formData.email}
 							onChange={handleInputChange}
-							className='email'
+							className={`email ${errors.email ? 'error' : ''}`}
 							placeholder='Enter your email'
 						/>
 						<p style={{ color: 'red' }}>{errors.email}</p>
@@ -127,7 +128,7 @@ const Registration = () => {
 							id='password'
 							value={formData.password}
 							onChange={handleInputChange}
-							className='password'
+							className={`password ${errors.password ? 'error' : ''}`}
 							placeholder='Enter your password'
 						/>
 						<p style={{ color: 'red' }}>{errors.password}</p>

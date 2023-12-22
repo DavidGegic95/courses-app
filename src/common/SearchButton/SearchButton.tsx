@@ -14,10 +14,12 @@ const SearchButton = ({
 	setCourseList,
 	searchQuery,
 	courseList,
+	setIsSearchClicked,
 }: {
 	setCourseList: Dispatch<SetStateAction<mockedCourse[] | undefined>>;
 	searchQuery: string;
 	courseList: mockedCourse[] | undefined;
+	setIsSearchClicked: Dispatch<SetStateAction<boolean>>;
 }) => {
 	function handleOnClick() {
 		const regex = new RegExp(searchQuery, 'gi');
@@ -31,6 +33,7 @@ const SearchButton = ({
 				}
 			}
 		}
+		setIsSearchClicked(true);
 
 		setCourseList(searchedCourses);
 	}

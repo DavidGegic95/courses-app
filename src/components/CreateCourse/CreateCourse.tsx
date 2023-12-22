@@ -4,34 +4,62 @@ import './createCourse.css';
 import { formatDuration } from '../../helpers/getCourseDuration';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../../common/Button/Button';
+import AuthorItem from '../AuthorItem/AuthorItem';
+import { newDate } from '../../helpers/newDate';
 type Author = {
 	id: string;
 	name: string;
 };
 
 const CreateCourse = () => {
-	const [courseData, setCourseData] = useState({
-		id: uuidv4(),
-		title: '',
-		description: '',
-		creationDate: '',
-		duration: 0,
-		authors: [] as unknown as Author[],
-	});
+	const [authorsList, setAuthorsList] = useState([] as Author[]);
 
 	const [singleAuthor, setSingleAuthor] = useState({
 		name: '',
 		id: uuidv4(),
 	});
-	const addAuthor = (newAuthor: Author) => {
-		setCourseData((prevData) => ({
-			...prevData,
-			authors: [...prevData.authors, newAuthor],
-		}));
-		setSingleAuthor({
-			name: '',
-			id: uuidv4(),
+	const [courseData, setCourseData] = useState({
+		id: uuidv4(),
+		title: '',
+		description: '',
+		creationDate: newDate(),
+		duration: 0,
+		authors: [] as unknown as Author[],
+	});
+
+	const addAuthorToList = (newAuthor: Author) => {
+		if (singleAuthor.name !== '') {
+			const newList = [...authorsList, newAuthor];
+			setAuthorsList(newList);
+			setSingleAuthor({
+				name: '',
+				id: uuidv4(),
+			});
+		}
+	};
+
+	const removeAuthor = (authorId: string) => {
+		const addedAuthor = courseData.authors.find(
+			(author) => author.id === authorId
+		);
+		const newList = courseData.authors.filter(
+			(author) => author.id !== authorId
+		);
+		setCourseData((prevData) => {
+			return { ...prevData, authors: [...newList] };
 		});
+		setAuthorsList((prev) => {
+			return [...prev, addedAuthor!];
+		});
+	};
+
+	const addAuthor = (authorId: string) => {
+		const addedAuthor = authorsList.find((author) => author.id === authorId);
+		const newList = authorsList.filter((author) => author.id !== authorId);
+		setCourseData((prevData) => {
+			return { ...prevData, authors: [...prevData.authors, addedAuthor!] };
+		});
+		setAuthorsList(newList);
 	};
 
 	const handleAuthorInputChange = (
@@ -53,7 +81,8 @@ const CreateCourse = () => {
 		console.log(courseData);
 		setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
 	};
-	//eslint-disable-next-line
+
+	// eslint-disable-next-line
 	const [errors, setErrors] = useState({
 		id: '',
 		title: '',
@@ -109,21 +138,39 @@ const CreateCourse = () => {
 						onChange={handleAuthorInputChange}
 					/>
 					<Button
-						onClick={() => addAuthor(singleAuthor)}
+						onClick={() => addAuthorToList(singleAuthor)}
 						name='create_author_button'
 						buttonText='Create Author'
 					/>
 					<div>
-						<p className='titles_container_createCourse'>Course Author</p>
-						<span className='subtitle_container_createCourse'>
-							Author list is empty
-						</span>
+						<p className='titles_container_createCourse'>Course Authors</p>
+						{courseData.authors.length === 0 ? (
+							<span className='subtitle_container_createCourse'>
+								Author list is empty
+							</span>
+						) : (
+							courseData.authors.map((e) => {
+								return (
+									<AuthorItem
+										onClickAuthors={() => removeAuthor(e.id)}
+										name={e.name}
+										type='courseAuthors'
+									/>
+								);
+							})
+						)}
 					</div>
 				</div>
 				<div className='constainer_authorsList'>
 					<p className='title_authorsList'>Authors list:</p>
-					{courseData.authors.map((e: Author) => {
-						return <span>{e.name}</span>;
+					{authorsList.map((e: Author) => {
+						return (
+							<AuthorItem
+								onClickAuthors={() => addAuthor(e.id)}
+								type='authorsList'
+								name={e.name}
+							/>
+						);
 					})}
 				</div>
 			</div>

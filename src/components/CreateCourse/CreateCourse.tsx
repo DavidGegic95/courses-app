@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 import { newDate } from '../../helpers/newDate';
-import { mockedCoursesList } from '../../constants';
+import { mockedCoursesList, mockedAuthorsList } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 type Author = {
 	id: string;
@@ -107,7 +107,9 @@ const CreateCourse = () => {
 		const descriptionValidation = courseData.description.length >= 2;
 		const durationValidation = courseData.duration > 0;
 		if (titleValidation && descriptionValidation && durationValidation) {
+			const authorsIdAndName = courseData.authors;
 			const authorsId = courseData.authors.map((e) => e.id);
+			authorsIdAndName.forEach((author) => mockedAuthorsList.push(author));
 			mockedCoursesList.push({ ...courseData, authors: authorsId });
 			navigate('/courses');
 		} else {

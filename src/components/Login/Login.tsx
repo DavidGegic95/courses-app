@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../common/Button/Button';
 import './login.css';
 type UserRegistration = {
 	password: string;
@@ -12,6 +13,10 @@ const Login = () => {
 		password: '',
 		email: '',
 	});
+	const [errors, setErrors] = useState({
+		email: '',
+		password: '',
+	});
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData({
@@ -20,10 +25,6 @@ const Login = () => {
 		});
 		setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
 	};
-	const [errors, setErrors] = useState({
-		email: '',
-		password: '',
-	});
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -111,9 +112,7 @@ const Login = () => {
 						/>
 						<p style={{ color: 'red' }}>{errors.password}</p>
 					</div>
-					<button type='submit' className='registration_button'>
-						Login
-					</button>
+					<Button type='submit' name='registration_button' buttonText='Login' />
 				</form>
 
 				<div className='link_wrapper' id='login_wrapper'>

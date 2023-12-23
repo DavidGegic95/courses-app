@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../common/Button/Button';
 import './registration.css';
 
 type UserRegistration = {
@@ -133,9 +134,11 @@ const Registration = () => {
 						/>
 						<p style={{ color: 'red' }}>{errors.password}</p>
 					</div>
-					<button type='submit' className='registration_button'>
-						Login
-					</button>
+					<Button
+						type='submit'
+						name='registration_button'
+						buttonText='Register'
+					/>
 				</form>
 
 				<div className='link_wrapper'>

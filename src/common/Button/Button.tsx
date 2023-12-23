@@ -4,13 +4,15 @@ const Button = ({
 	buttonText,
 	name,
 	onClick,
+	type,
 }: {
 	buttonText: string;
 	name?: string;
 	onClick?: () => void;
+	type?: 'submit';
 }) => {
 	return (
-		<button onClick={onClick} className={name}>
+		<button type={type} onClick={onClick} className={name}>
 			{buttonText}
 		</button>
 	);

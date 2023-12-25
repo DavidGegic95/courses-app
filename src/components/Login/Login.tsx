@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../store/user/userSlice';
 import './login.css';
 type UserRegistration = {
 	password: string;
@@ -8,6 +10,7 @@ type UserRegistration = {
 };
 
 const Login = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState<UserRegistration>({
 		password: '',
@@ -71,6 +74,14 @@ const Login = () => {
 			.then((data) => {
 				localStorage.setItem('token', data.result);
 				localStorage.setItem('user', data.user.name);
+				console.log(data);
+				dispatch(
+					loginUser({
+						name: data.user.name,
+						email: data.user.email,
+						token: data.result,
+					})
+				);
 				navigate('/courses');
 			})
 			.catch((error) => {

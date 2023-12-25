@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
 import { mockedCoursesList } from '../../../constants';
-import './courses.css';
+import { useSelector } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
 import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
+// import { getAllCourses } from '../../../services';
+import './courses.css';
+// import { setCourses } from '../../../store/courses/coursesSlice';
 type mockedCourse = {
 	id: string;
 	title: string;
@@ -18,6 +21,18 @@ const Courses = () => {
 	const [courseList, setCourseList] = useState<mockedCourse[] | undefined>([]);
 	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	type coursesType = [];
+	// const dispatch = useDispatch();
+
+	// const saveCoursesToState = () => dispatch(setCourses());
+
+	const coursesState = useSelector(
+		(state: { courses: coursesType }) => state.courses as coursesType
+	);
+
+	useEffect(() => {
+		// getAllCourses();
+	}, []);
 	useEffect(() => {
 		if (searchQuery === '') {
 			setIsSearchClicked(false);
@@ -40,7 +55,7 @@ const Courses = () => {
 				</Link>
 			</div>
 
-			{courseList?.length !== 0 ? (
+			{coursesState?.length !== 0 ? (
 				courseList?.map((e) => (
 					<CourseCard
 						key={e.id}

@@ -9,10 +9,11 @@ const Header = () => {
 	const navigate = useNavigate();
 	const { pathname } = location;
 	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token'));
-	const [user] = useState(localStorage.getItem('user'));
+	const [userName, setUserName] = useState(localStorage.getItem('user'));
 
 	useEffect(() => {
 		setIsLoggedIn(localStorage.getItem('token'));
+		setUserName(localStorage.getItem('user'));
 	}, [pathname]);
 
 	function onClickLogout() {
@@ -25,7 +26,7 @@ const Header = () => {
 			<Logo />
 			{isLoggedIn && (
 				<div className='logout_user_wrapper'>
-					<p className='user_name'>{user}</p>
+					<p className='user_name'>{userName}</p>
 					<Button
 						onClick={onClickLogout}
 						name='button_header'

@@ -1,45 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
-import CourseInfo from './components/CourseInfo/CourseInfo';
-import Courses from './components/Courses/components/Courses';
-import EmptyCourseList from './components/EmptyCourseList/EmptyCourseList';
-import Header from './components/Header/Header';
-import { mockedCoursesList } from './constants';
-
-type CourseInfoType = {
-	IdOfCourse: string;
-	title: string;
-	description: string;
-	duration: number;
-	listOfAuthors: string[];
-	creationDate: string;
-};
 
 function App() {
-	const [courseInfoState, setCourseInfoState] = useState<CourseInfoType | null>(
-		null
-	);
-	// eslint-disable-next-line
-	const [courseList, setCourseList] = useState(mockedCoursesList);
-	return (
-		<div className='App'>
-			<Header />
-
-			{courseList.length === 0 ? (
-				<EmptyCourseList />
-			) : !courseInfoState ? (
-				<Courses
-					mockedCoursesList={mockedCoursesList}
-					setCourseInfoState={setCourseInfoState}
-				/>
-			) : (
-				<CourseInfo
-					setCourseInfoState={setCourseInfoState}
-					courseInfoState={courseInfoState}
-				/>
-			)}
-		</div>
-	);
+	const navigate = useNavigate();
+	const location = useLocation();
+	const { pathname } = location;
+	useEffect(() => {
+		if (localStorage.getItem('token') && navigate) {
+			navigate('/courses');
+		} else {
+			navigate('/login');
+		}
+	}, [pathname]);
+	return <div className='app'></div>;
 }
 
 export default App;

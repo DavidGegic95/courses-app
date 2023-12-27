@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
-// import { mockedCoursesList } from '../../../constants';
+import { mockedCoursesList } from '../../../constants';
 import './courses.css';
 import SearchBar from './SearchBar/SearchBar';
+import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
 type mockedCourse = {
 	id: string;
 	title: string;
@@ -11,45 +13,36 @@ type mockedCourse = {
 	authors: string[];
 	creationDate: string;
 };
-type CourseInfoType = {
-	IdOfCourse: string;
-	title: string;
-	description: string;
-	duration: number;
-	listOfAuthors: string[];
-	creationDate: string;
-};
 
-const Courses = ({
-	mockedCoursesList,
-	setCourseInfoState,
-}: {
-	mockedCoursesList: mockedCourse[];
-	setCourseInfoState: (arr: CourseInfoType | null) => void;
-}) => {
-	const [courseList, setCourseList] = useState<mockedCourse[]>();
+const Courses = () => {
+	const [courseList, setCourseList] = useState<mockedCourse[] | undefined>([]);
+	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
-
-	useEffect(() => {
-		setCourseList(mockedCoursesList);
-	}, []);
 	useEffect(() => {
 		if (searchQuery === '') {
+			setIsSearchClicked(false);
 			setCourseList(mockedCoursesList);
 		}
 	}, [searchQuery]);
+
 	return (
 		<div className='courses_component'>
-			<SearchBar
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-				courseList={courseList}
-				setCourseList={setCourseList}
-			/>
+			<div className='searchBar_link_wrapper'>
+				<SearchBar
+					setIsSearchClicked={setIsSearchClicked}
+					searchQuery={searchQuery}
+					setSearchQuery={setSearchQuery}
+					courseList={courseList}
+					setCourseList={setCourseList}
+				/>
+				<Link className='addCourse_button' to={'/courses/add'}>
+					Add New Course
+				</Link>
+			</div>
+
 			{courseList?.length !== 0 ? (
 				courseList?.map((e) => (
 					<CourseCard
-						setCourseInfoState={setCourseInfoState}
 						key={e.id}
 						courseId={e.id}
 						title={e.title}
@@ -59,8 +52,10 @@ const Courses = ({
 						creationDate={e.creationDate}
 					/>
 				))
-			) : (
+			) : isSearchClicked ? (
 				<p>No results match your search criteria.</p>
+			) : (
+				<EmptyCourseList />
 			)}
 		</div>
 	);

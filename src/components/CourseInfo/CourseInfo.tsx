@@ -1,21 +1,15 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../common/Button/Button';
-import { mockedAuthorsList, mockedCoursesList } from '../../constants';
 import { formatDuration } from '../../helpers/getCourseDuration';
 import { formatDate } from '../../helpers/formatCreationDate';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { CourseType } from '../../store/courses/types';
+import { AuthorType } from '../../store/authors/types';
+import { selectAuthor } from '../../helpers/selectAuthorsFormat';
 import './courseInfo.css';
 
-function selectAuthor(authorID: string): string {
-	let authorName = '';
-	for (const element of mockedAuthorsList) {
-		if (authorID === element.id) {
-			authorName = element.name;
-		}
-	}
-
-	return authorName;
-}
 type Course = {
 	id: string;
 	title: string;
@@ -28,7 +22,13 @@ type Course = {
 const CourseInfo = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
-	const courseInfoState: Course | undefined = mockedCoursesList.find(
+	const coursesState = useSelector(
+		(state: RootState) => state.courses as { courses: CourseType[] }
+	);
+	const authorsState = useSelector(
+		(state: RootState) => state.authors as AuthorType[]
+	);
+	const courseInfoState: Course | undefined = coursesState?.courses?.find(
 		(course) => course.id === courseId
 	);
 
@@ -67,7 +67,7 @@ const CourseInfo = () => {
 									if (index !== courseInfoState.authors.length - 1) {
 										format = ', ';
 									}
-									return selectAuthor(e) + format;
+									return selectAuthor(e, authorsState) + format;
 								})}
 							</span>
 						</div>

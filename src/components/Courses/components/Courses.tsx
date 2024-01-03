@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
-// import { mockedCoursesList } from '../../../constants';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
 import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
 import './courses.css';
-import { fetchCoursesFromService } from '../../../services';
+import {
+	fetchAuthorsFromService,
+	fetchCoursesFromService,
+} from '../../../services';
 import { saveCoursesAction } from '../../../store/courses/actions';
 import { RootState } from '../../../store';
+import { saveAuthorsAction } from '../../../store/authors/actions';
 type mockedCourse = {
 	id: string;
 	title: string;
@@ -22,6 +25,15 @@ const Courses = () => {
 	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const dispatch = useDispatch();
+
+	async function fetchAndSaveAuthors() {
+		const authorsList = await fetchAuthorsFromService();
+		dispatch(saveAuthorsAction(authorsList));
+	}
+
+	useEffect(() => {
+		fetchAndSaveAuthors();
+	}, []);
 	//eslint_disable-next-line
 	const coursesState: {
 		map(
@@ -39,8 +51,6 @@ const Courses = () => {
 				): React.ReactNode;
 			}
 	);
-	// const coursesList = coursesState.courses;
-	console.log(coursesState, 'state use selector');
 
 	async function fetchAndSetCoures() {
 		const courses = await fetchCoursesFromService();

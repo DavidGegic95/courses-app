@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { formatDuration } from '../../../../helpers/getCourseDuration';
 import { formatDate } from '../../../../helpers/formatCreationDate';
 import { selectAuthor } from '../../../../helpers/selectAuthorsFormat';
+import { useSelector } from 'react-redux';
 import './courseCard.css';
+import { RootState } from '../../../../store';
+import { AuthorType } from '../../../../store/authors/types';
 
 const CourseCard = ({
 	title,
@@ -23,6 +26,10 @@ const CourseCard = ({
 	authors: string[];
 	courseId: string;
 }) => {
+	const authorsList = useSelector(
+		(state: RootState) => state.authors as AuthorType[]
+	);
+
 	const navigate = useNavigate();
 	return (
 		<div className='course_card'>
@@ -37,7 +44,7 @@ const CourseCard = ({
 							if (index !== authors.length - 1) {
 								format = ', ';
 							}
-							return selectAuthor(e) + format;
+							return selectAuthor(e, authorsList) + format;
 						})}
 					</p>
 					<p className='authors_course_card'>

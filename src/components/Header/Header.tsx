@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
 import './header.css';
-import { logoutUser } from '../../store/user/actions';
+import { loginUser, logoutUser } from '../../store/user/actions';
 type UserType = {
 	isAuth: boolean;
 	name: string;
@@ -16,22 +16,27 @@ const Header = () => {
 	const userState = useSelector(
 		(state: { user: UserType }) => state.user as UserType
 	);
-	//eslint-disable-next-line
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { pathname } = location;
-	//eslint-disable-next-line
-	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token'));
-	//eslint-disable-next-line
-	// const [user] = useState(localStorage.getItem('user'));
 
 	useEffect(() => {
-		setIsLoggedIn(localStorage.getItem('token'));
+		if (localStorage.getItem('token')) {
+			dispatch(
+				loginUser({
+					isAuth: true,
+					name: localStorage.getItem('user') || '',
+					token: localStorage.getItem('token') || '',
+					email: '',
+				})
+			);
+		}
 	}, [pathname]);
 
 	function onClickLogout() {
 		localStorage.removeItem('token');
+		localStorage.removeItem('user');
 		dispatch(logoutUser());
 		navigate('/login');
 	}

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
-import { mockedCoursesList } from '../../../constants';
-import { useSelector } from 'react-redux';
+// import { mockedCoursesList } from '../../../constants';
+import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
 import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
-// import { getAllCourses } from '../../../services';
 import './courses.css';
-// import { setCourses } from '../../../store/courses/coursesSlice';
+import { fetchCoursesFromService } from '../../../services';
+import { saveCoursesAction } from '../../../store/courses/actions';
+import { RootState } from '../../../store';
 type mockedCourse = {
 	id: string;
 	title: string;
@@ -18,27 +19,43 @@ type mockedCourse = {
 };
 
 const Courses = () => {
-	const [courseList, setCourseList] = useState<mockedCourse[] | undefined>([]);
 	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
-	type coursesType = [];
-	// const dispatch = useDispatch();
-
-	// const saveCoursesToState = () => dispatch(setCourses());
-
-	const coursesState = useSelector(
-		(state: { courses: coursesType }) => state.courses as coursesType
+	const dispatch = useDispatch();
+	//eslint_disable-next-line
+	const coursesState: {
+		map(
+			arg0: (e: mockedCourse) => import('react/jsx-runtime').JSX.Element
+		): React.ReactNode;
+		courses: mockedCourse[];
+		length: number;
+	} = useSelector(
+		(state: RootState) =>
+			state.courses as {
+				courses: mockedCourse[];
+				length: number;
+				map(
+					arg0: (e: mockedCourse) => import('react/jsx-runtime').JSX.Element
+				): React.ReactNode;
+			}
 	);
+	// const coursesList = coursesState.courses;
+	console.log(coursesState, 'state use selector');
+
+	async function fetchAndSetCoures() {
+		const courses = await fetchCoursesFromService();
+		dispatch(saveCoursesAction(courses));
+	}
 
 	useEffect(() => {
-		// getAllCourses();
+		fetchAndSetCoures();
 	}, []);
-	useEffect(() => {
-		if (searchQuery === '') {
-			setIsSearchClicked(false);
-			setCourseList(mockedCoursesList);
-		}
-	}, [searchQuery]);
+	// useEffect(() => {
+	// 	if (searchQuery === '') {
+	// 		setIsSearchClicked(false);
+	// 		setCourseList(mockedCoursesList);
+	// 	}
+	// }, [searchQuery]);
 
 	return (
 		<div className='courses_component'>
@@ -47,8 +64,8 @@ const Courses = () => {
 					setIsSearchClicked={setIsSearchClicked}
 					searchQuery={searchQuery}
 					setSearchQuery={setSearchQuery}
-					courseList={courseList}
-					setCourseList={setCourseList}
+					// courseList={courseList}
+					// setCourseList={setCourseList}
 				/>
 				<Link className='addCourse_button' to={'/courses/add'}>
 					Add New Course
@@ -56,7 +73,7 @@ const Courses = () => {
 			</div>
 
 			{coursesState?.length !== 0 ? (
-				courseList?.map((e) => (
+				coursesState.courses?.map((e) => (
 					<CourseCard
 						key={e.id}
 						courseId={e.id}

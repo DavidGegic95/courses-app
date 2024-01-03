@@ -2,8 +2,8 @@ import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../store/user/userSlice';
 import './login.css';
+import { loginUser } from '../../store/user/actions';
 type UserRegistration = {
 	password: string;
 	email: string;
@@ -77,6 +77,7 @@ const Login = () => {
 				console.log(data);
 				dispatch(
 					loginUser({
+						isAuth: true,
 						name: data.user.name,
 						email: data.user.email,
 						token: data.result,

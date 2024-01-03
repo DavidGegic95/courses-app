@@ -11,14 +11,14 @@ type mockedCourse = {
 };
 
 const SearchButton = ({
-	setCourseList,
+	// setCourseList,
 	searchQuery,
 	courseList,
 	setIsSearchClicked,
 }: {
-	setCourseList: Dispatch<SetStateAction<mockedCourse[] | undefined>>;
+	setCourseList?: Dispatch<SetStateAction<mockedCourse[] | undefined>>;
 	searchQuery: string;
-	courseList: mockedCourse[] | undefined;
+	courseList?: mockedCourse[] | undefined;
 	setIsSearchClicked: Dispatch<SetStateAction<boolean>>;
 }) => {
 	function handleOnClick() {
@@ -35,7 +35,7 @@ const SearchButton = ({
 		}
 		setIsSearchClicked(true);
 
-		setCourseList(searchedCourses);
+		// setCourseList(searchedCourses);
 	}
 
 	return (

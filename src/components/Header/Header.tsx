@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
 import './header.css';
-import { logoutUser } from '../../store/user/userSlice';
+import { logoutUser } from '../../store/user/actions';
 type UserType = {
 	isAuth: boolean;
 	name: string;
@@ -24,7 +24,7 @@ const Header = () => {
 	//eslint-disable-next-line
 	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token'));
 	//eslint-disable-next-line
-	const [user] = useState(localStorage.getItem('user'));
+	// const [user] = useState(localStorage.getItem('user'));
 
 	useEffect(() => {
 		setIsLoggedIn(localStorage.getItem('token'));

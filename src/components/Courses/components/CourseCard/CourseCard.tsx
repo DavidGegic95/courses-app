@@ -1,15 +1,14 @@
 import React from 'react';
 import Button from '../../../../common/Button/Button';
-import { ReactComponent as TrashIcon } from '../../../../assets/Icon-Trash.svg';
-import { ReactComponent as EditIcon } from '../../../../assets/Icon-Edit.svg';
 import { useNavigate } from 'react-router-dom';
 import { formatDuration } from '../../../../helpers/getCourseDuration';
 import { formatDate } from '../../../../helpers/formatCreationDate';
 import { selectAuthor } from '../../../../helpers/selectAuthorsFormat';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './courseCard.css';
 import { RootState } from '../../../../store';
 import { AuthorType } from '../../../../store/authors/types';
+import { deleteCourseAction } from '../../../../store/courses/actions';
 
 const CourseCard = ({
 	title,
@@ -26,11 +25,12 @@ const CourseCard = ({
 	authors: string[];
 	courseId: string;
 }) => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const authorsList = useSelector(
 		(state: RootState) => state.authors as AuthorType[]
 	);
 
-	const navigate = useNavigate();
 	return (
 		<div className='course_card'>
 			<p className='title_course_card'>{title}</p>
@@ -39,7 +39,7 @@ const CourseCard = ({
 				<div className='section_2_house_card'>
 					<p className='authors_course_card'>
 						<span>Authors: </span>
-						{authors.map((e, index) => {
+						{authors?.map((e, index) => {
 							let format = '';
 							if (index !== authors.length - 1) {
 								format = ', ';
@@ -61,8 +61,16 @@ const CourseCard = ({
 							name='button_show_course'
 							buttonText='Show Course'
 						/>
-						<TrashIcon />
-						<EditIcon />
+						<Button
+							name='icon_button'
+							buttonText='trashIcon'
+							onClick={() => dispatch(deleteCourseAction(courseId))}
+						/>
+						<Button
+							name='icon_button'
+							buttonText='editIcon'
+							onClick={() => console.log(`onclick edit ${courseId}`)}
+						/>
 					</div>
 				</div>
 			</section>

@@ -11,24 +11,24 @@ import { selectAuthor } from '../../helpers/selectAuthorsFormat';
 import './courseInfo.css';
 
 type Course = {
-	id: string;
+	id?: string;
 	title: string;
 	description: string;
 	duration: number;
 	authors: string[];
-	creationDate: string;
+	creationDate?: string;
 };
 
 const CourseInfo = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
 	const coursesState = useSelector(
-		(state: RootState) => state.courses as { courses: CourseType[] }
+		(state: RootState) => state.courses as CourseType[]
 	);
 	const authorsState = useSelector(
 		(state: RootState) => state.authors as AuthorType[]
 	);
-	const courseInfoState: Course | undefined = coursesState?.courses?.find(
+	const courseInfoState: Course | undefined = coursesState?.find(
 		(course) => course.id === courseId
 	);
 

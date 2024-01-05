@@ -8,9 +8,7 @@ export function authorsReducer(
 ) {
 	switch (action.type) {
 		case AuthorsActionTypes.SAVE_AUTHORS:
-			return { ...state, authors: action.payload };
-		case AuthorsActionTypes.REMOVE_AUTHOR:
-			return [...state, action.payload];
+			return [...action.payload];
 
 		default:
 			return state;

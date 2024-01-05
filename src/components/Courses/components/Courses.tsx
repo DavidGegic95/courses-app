@@ -35,21 +35,8 @@ const Courses = () => {
 		fetchAndSaveAuthors();
 	}, []);
 	//eslint_disable-next-line
-	const coursesState: {
-		map(
-			arg0: (e: mockedCourse) => import('react/jsx-runtime').JSX.Element
-		): React.ReactNode;
-		courses: mockedCourse[];
-		length: number;
-	} = useSelector(
-		(state: RootState) =>
-			state.courses as {
-				courses: mockedCourse[];
-				length: number;
-				map(
-					arg0: (e: mockedCourse) => import('react/jsx-runtime').JSX.Element
-				): React.ReactNode;
-			}
+	const coursesState = useSelector(
+		(state: RootState) => state.courses as mockedCourse[]
 	);
 
 	async function fetchAndSetCoures() {
@@ -83,7 +70,7 @@ const Courses = () => {
 			</div>
 
 			{coursesState?.length !== 0 ? (
-				coursesState.courses?.map((e) => (
+				coursesState?.map((e) => (
 					<CourseCard
 						key={e.id}
 						courseId={e.id}

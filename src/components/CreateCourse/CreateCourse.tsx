@@ -6,8 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 import { newDate } from '../../helpers/newDate';
-import { mockedCoursesList, mockedAuthorsList } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { addAuthorToDatabase } from '../../services';
+import { useDispatch } from 'react-redux';
+import { addCourseAction } from '../../store/courses/actions';
 type Author = {
 	id: string;
 	name: string;
@@ -15,6 +17,7 @@ type Author = {
 
 const CreateCourse = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [authorsList, setAuthorsList] = useState([] as Author[]);
 
 	const [singleAuthor, setSingleAuthor] = useState({
@@ -26,7 +29,7 @@ const CreateCourse = () => {
 		title: '',
 		description: '',
 		creationDate: newDate(),
-		duration: 0,
+		duration: 1,
 		authors: [] as unknown as Author[],
 	});
 	// eslint-disable-next-line
@@ -39,10 +42,14 @@ const CreateCourse = () => {
 		authors: '',
 	});
 
-	const addAuthorToList = (newAuthor: Author) => {
+	const addAuthorToList = async (newAuthor: Author) => {
 		if (singleAuthor.name !== '') {
 			const newList = [...authorsList, newAuthor];
 			setAuthorsList(newList);
+			const id = await addAuthorToDatabase(singleAuthor.name);
+			setCourseData((prev) => {
+				return { ...prev, authors: [...prev.authors, id] };
+			});
 			setSingleAuthor({
 				name: '',
 				id: uuidv4(),
@@ -102,16 +109,28 @@ const CreateCourse = () => {
 		setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
 	};
 
-	const createCourse = () => {
+	const createCourse = async () => {
 		const titleValidation = courseData.title.length >= 2;
 		const descriptionValidation = courseData.description.length >= 2;
 		const durationValidation = courseData.duration > 0;
 		if (titleValidation && descriptionValidation && durationValidation) {
 			const authorsIdAndName = courseData.authors;
-			const authorsId = courseData.authors.map((e) => e.id);
-			authorsIdAndName.forEach((author) => mockedAuthorsList.push(author));
-			mockedCoursesList.push({ ...courseData, authors: authorsId });
+			const authorsId = authorsIdAndName.map((e) => e.id);
+			// authorsIdAndName.forEach(async (author) => {
+			// 	const id = await addAuthorToDatabase(author.name);
+			// 	authorsId.push(id);
+			// });
+			const requestBody = {
+				title: courseData.title,
+				description: courseData.description,
+				duration: courseData.duration,
+				authors: authorsId,
+			};
+			dispatch(addCourseAction(requestBody));
+			// createCourseApiRequest(requestBody);
 			navigate('/courses');
+			// fetchAuthorsFromService();
+			// fetchCoursesFromService();
 		} else {
 			if (!titleValidation) {
 				setErrors((prevErrors) => ({

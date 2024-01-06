@@ -1,31 +1,16 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
-import './header.css';
-import { loginUser, logoutUser } from '../../store/user/actions';
+import { logoutUser } from '../../store/user/actions';
 import { getUser } from '../../helpers/selectors';
+import './header.css';
 
 const Header = () => {
 	const userState = useSelector(getUser);
 	const dispatch = useDispatch();
-	const location = useLocation();
 	const navigate = useNavigate();
-	const { pathname } = location;
-
-	useEffect(() => {
-		if (localStorage.getItem('token')) {
-			dispatch(
-				loginUser({
-					isAuth: true,
-					name: localStorage.getItem('user') || '',
-					token: localStorage.getItem('token') || '',
-					email: '',
-				})
-			);
-		}
-	}, [pathname]);
 
 	function onClickLogout() {
 		localStorage.removeItem('token');

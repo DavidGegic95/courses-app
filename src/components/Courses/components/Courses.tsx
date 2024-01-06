@@ -4,38 +4,24 @@ import CourseCard from './CourseCard/CourseCard';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
 import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
-import './courses.css';
-import { saveCoursesAction } from '../../../store/courses/actions';
-import { saveAuthorsAction } from '../../../store/authors/actions';
 import { getCourses } from '../../../helpers/selectors';
-import {
-	fetchAuthorsFromService,
-	fetchCoursesFromService,
-} from '../../../services';
+import { coursesThunkFunction } from '../../../store/courses/thunk';
+import { authorsThunkFunction } from '../../../store/authors/thunk';
+import './courses.css';
+import { userThunkAction } from '../../../store/user/thunk';
 
 const Courses = () => {
 	const [isSearchClicked, setIsSearchClicked] = useState(false);
+	const coursesState = useSelector(getCourses);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const dispatch = useDispatch();
 
-	async function fetchAndSaveAuthors() {
-		const authorsList = await fetchAuthorsFromService();
-		dispatch(saveAuthorsAction(authorsList));
-	}
-
 	useEffect(() => {
-		fetchAndSaveAuthors();
-	}, []);
-
-	const coursesState = useSelector(getCourses);
-
-	async function fetchAndSetCoures() {
-		const courses = await fetchCoursesFromService();
-		dispatch(saveCoursesAction(courses));
-	}
-
-	useEffect(() => {
-		fetchAndSetCoures();
+		authorsThunkFunction(dispatch);
+		coursesThunkFunction(dispatch);
+		if (localStorage.getItem('token')) {
+			userThunkAction(dispatch);
+		}
 	}, []);
 
 	return (

@@ -4,10 +4,8 @@ import Button from '../../common/Button/Button';
 import { formatDuration } from '../../helpers/getCourseDuration';
 import { formatDate } from '../../helpers/formatCreationDate';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { CourseType } from '../../store/courses/types';
-import { AuthorType } from '../../store/authors/types';
 import { selectAuthor } from '../../helpers/selectAuthorsFormat';
+import { getAuthors, getCourses } from '../../helpers/selectors';
 import './courseInfo.css';
 
 type Course = {
@@ -22,12 +20,8 @@ type Course = {
 const CourseInfo = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
-	const coursesState = useSelector(
-		(state: RootState) => state.courses as CourseType[]
-	);
-	const authorsState = useSelector(
-		(state: RootState) => state.authors as AuthorType[]
-	);
+	const coursesState = useSelector(getCourses);
+	const authorsState = useSelector(getAuthors);
 	const courseInfoState: Course | undefined = coursesState?.find(
 		(course) => course.id === courseId
 	);

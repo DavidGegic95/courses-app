@@ -5,17 +5,10 @@ import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
 import './header.css';
 import { loginUser, logoutUser } from '../../store/user/actions';
-type UserType = {
-	isAuth: boolean;
-	name: string;
-	email: string;
-	token: string;
-};
+import { getUser } from '../../helpers/selectors';
 
 const Header = () => {
-	const userState = useSelector(
-		(state: { user: UserType }) => state.user as UserType
-	);
+	const userState = useSelector(getUser);
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();

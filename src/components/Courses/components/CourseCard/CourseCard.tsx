@@ -6,9 +6,8 @@ import { formatDate } from '../../../../helpers/formatCreationDate';
 import { selectAuthor } from '../../../../helpers/selectAuthorsFormat';
 import { useDispatch, useSelector } from 'react-redux';
 import './courseCard.css';
-import { RootState } from '../../../../store';
-import { AuthorType } from '../../../../store/authors/types';
 import { deleteCourseAction } from '../../../../store/courses/actions';
+import { getAuthors } from '../../../../helpers/selectors';
 
 const CourseCard = ({
 	title,
@@ -27,9 +26,7 @@ const CourseCard = ({
 }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const authorsList = useSelector(
-		(state: RootState) => state.authors as AuthorType[]
-	);
+	const authorsList = useSelector(getAuthors);
 
 	return (
 		<div className='course_card'>

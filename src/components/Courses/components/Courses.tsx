@@ -5,21 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
 import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
 import './courses.css';
+import { saveCoursesAction } from '../../../store/courses/actions';
+import { saveAuthorsAction } from '../../../store/authors/actions';
+import { getCourses } from '../../../helpers/selectors';
 import {
 	fetchAuthorsFromService,
 	fetchCoursesFromService,
 } from '../../../services';
-import { saveCoursesAction } from '../../../store/courses/actions';
-import { RootState } from '../../../store';
-import { saveAuthorsAction } from '../../../store/authors/actions';
-type mockedCourse = {
-	id: string;
-	title: string;
-	duration: number;
-	description: string;
-	authors: string[];
-	creationDate: string;
-};
 
 const Courses = () => {
 	const [isSearchClicked, setIsSearchClicked] = useState(false);
@@ -35,9 +27,7 @@ const Courses = () => {
 		fetchAndSaveAuthors();
 	}, []);
 	//eslint_disable-next-line
-	const coursesState = useSelector(
-		(state: RootState) => state.courses as mockedCourse[]
-	);
+	const coursesState = useSelector(getCourses);
 
 	async function fetchAndSetCoures() {
 		const courses = await fetchCoursesFromService();

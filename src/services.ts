@@ -80,3 +80,24 @@ export const logutUserFromService = async () => {
 		throw error;
 	}
 };
+
+export const deleteCourseFromService = async (courseId: string) => {
+	try {
+		const response = await fetch(`http://localhost:4000/courses/${courseId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to delete course. Status: ${response.status}`);
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error deliting course.');
+		throw error;
+	}
+};

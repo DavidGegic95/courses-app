@@ -3,6 +3,7 @@ export type UserType = {
 	name: string;
 	email: string;
 	token: string;
+	role: 'user' | 'admin';
 };
 export const enum UserActionTypes {
 	LOGIN_USER = 'LOGIN_USER',

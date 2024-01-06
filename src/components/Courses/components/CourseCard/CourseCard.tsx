@@ -5,9 +5,9 @@ import { formatDuration } from '../../../../helpers/getCourseDuration';
 import { formatDate } from '../../../../helpers/formatCreationDate';
 import { selectAuthor } from '../../../../helpers/selectAuthorsFormat';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAuthors, getUser } from '../../../../helpers/selectors';
+import { deletCourseThunkFunction } from '../../../../store/courses/thunk';
 import './courseCard.css';
-import { deleteCourseAction } from '../../../../store/courses/actions';
-import { getAuthors } from '../../../../helpers/selectors';
 
 const CourseCard = ({
 	title,
@@ -27,6 +27,7 @@ const CourseCard = ({
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authorsList = useSelector(getAuthors);
+	const userState = useSelector(getUser);
 
 	return (
 		<div className='course_card'>
@@ -58,16 +59,20 @@ const CourseCard = ({
 							name='button_show_course'
 							buttonText='Show Course'
 						/>
-						<Button
-							name='icon_button'
-							buttonText='trashIcon'
-							onClick={() => dispatch(deleteCourseAction(courseId))}
-						/>
-						<Button
-							name='icon_button'
-							buttonText='editIcon'
-							onClick={() => console.log(`onclick edit ${courseId}`)}
-						/>
+						{userState.role === 'admin' && (
+							<>
+								<Button
+									name='icon_button'
+									buttonText='trashIcon'
+									onClick={() => deletCourseThunkFunction(dispatch, courseId)}
+								/>
+								<Button
+									name='icon_button'
+									buttonText='editIcon'
+									onClick={() => console.log(`onclick edit ${courseId}`)}
+								/>
+							</>
+						)}
 					</div>
 				</div>
 			</section>

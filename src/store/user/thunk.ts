@@ -11,6 +11,7 @@ export const userThunkAction = async (dispatch: Dispatch<UnknownAction>) => {
 			name: response.name,
 			email: response.email,
 			token: localStorage.getItem('token')!,
+			role: response.role,
 		})
 	);
 };

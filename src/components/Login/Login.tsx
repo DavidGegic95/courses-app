@@ -80,6 +80,7 @@ const Login = () => {
 						name: data.user.name,
 						email: data.user.email,
 						token: data.result,
+						role: data.result.role,
 					})
 				);
 				navigate('/courses');

@@ -61,3 +61,22 @@ export const fetchUserFromService = async () => {
 		throw error;
 	}
 };
+
+export const logutUserFromService = async () => {
+	try {
+		const response = await fetch('http://localhost:4000/logout', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to logut user. Status: ${response.status}`);
+		}
+	} catch (error) {
+		console.error('Error logout user.');
+		throw error;
+	}
+};

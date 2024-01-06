@@ -6,6 +6,7 @@ import Logo from './components/Logo/Logo';
 import { logoutUser } from '../../store/user/actions';
 import { getUser } from '../../helpers/selectors';
 import './header.css';
+import { logutUserFromService } from '../../services';
 
 const Header = () => {
 	const userState = useSelector(getUser);
@@ -13,6 +14,7 @@ const Header = () => {
 	const navigate = useNavigate();
 
 	function onClickLogout() {
+		logutUserFromService();
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
 		dispatch(logoutUser());

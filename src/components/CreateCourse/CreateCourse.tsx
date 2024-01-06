@@ -7,19 +7,17 @@ import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 import { newDate } from '../../helpers/newDate';
 import { useNavigate } from 'react-router-dom';
-import { addAuthorToDatabase } from '../../services';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addCourseAction } from '../../store/courses/actions';
-type Author = {
-	id: string;
-	name: string;
-};
+import { getAuthors } from '../../helpers/selectors';
+import { addAuthorActions } from '../../store/authors/actions';
+import { AuthorType } from '../../store/authors/types';
 
 const CreateCourse = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const [authorsList, setAuthorsList] = useState([] as Author[]);
-
+	const authorsList = useSelector(getAuthors);
+	const [authorsListState, setAuthorsListState] = useState([] as AuthorType[]);
 	const [singleAuthor, setSingleAuthor] = useState({
 		name: '',
 		id: uuidv4(),
@@ -30,9 +28,8 @@ const CreateCourse = () => {
 		description: '',
 		creationDate: newDate(),
 		duration: 1,
-		authors: [] as unknown as Author[],
+		authors: [] as AuthorType[],
 	});
-	// eslint-disable-next-line
 	const [errors, setErrors] = useState({
 		id: '',
 		title: '',
@@ -42,14 +39,10 @@ const CreateCourse = () => {
 		authors: '',
 	});
 
-	const addAuthorToList = async (newAuthor: Author) => {
+	const addAuthorToList = (newAuthor: AuthorType) => {
 		if (singleAuthor.name !== '') {
-			const newList = [...authorsList, newAuthor];
-			setAuthorsList(newList);
-			const id = await addAuthorToDatabase(singleAuthor.name);
-			setCourseData((prev) => {
-				return { ...prev, authors: [...prev.authors, id] };
-			});
+			dispatch(addAuthorActions(newAuthor));
+			setAuthorsListState((prev) => [...prev, newAuthor]);
 			setSingleAuthor({
 				name: '',
 				id: uuidv4(),
@@ -58,27 +51,30 @@ const CreateCourse = () => {
 	};
 
 	const removeAuthor = (authorId: string) => {
-		const addedAuthor = courseData.authors.find(
-			(author) => author.id === authorId
-		);
+		const newList = authorsListState.filter((author) => author.id !== authorId);
+		setAuthorsListState([...newList]);
+	};
+
+	const removeAuthorFromCourseData = (authorId: string) => {
 		const newList = courseData.authors.filter(
 			(author) => author.id !== authorId
 		);
-		setCourseData((prevData) => {
-			return { ...prevData, authors: [...newList] };
-		});
-		setAuthorsList((prev) => {
-			return [...prev, addedAuthor!];
-		});
+		setCourseData((prev) => ({ ...prev, authors: newList }));
 	};
 
 	const addAuthor = (authorId: string) => {
-		const addedAuthor = authorsList.find((author) => author.id === authorId);
-		const newList = authorsList.filter((author) => author.id !== authorId);
-		setCourseData((prevData) => {
-			return { ...prevData, authors: [...prevData.authors, addedAuthor!] };
-		});
-		setAuthorsList(newList);
+		const courseDataAuthorsHasId = courseData.authors.find(
+			(e) => e.id === authorId
+		);
+		if (!courseDataAuthorsHasId) {
+			const addedAuthor = authorsList.find(
+				(author: AuthorType) => author.id === authorId
+			);
+			setCourseData((prevData) => {
+				return { ...prevData, authors: [...prevData.authors, addedAuthor!] };
+			});
+			dispatch(addAuthorActions(addedAuthor!));
+		}
 	};
 
 	const handleAuthorInputChange = (
@@ -116,10 +112,6 @@ const CreateCourse = () => {
 		if (titleValidation && descriptionValidation && durationValidation) {
 			const authorsIdAndName = courseData.authors;
 			const authorsId = authorsIdAndName.map((e) => e.id);
-			// authorsIdAndName.forEach(async (author) => {
-			// 	const id = await addAuthorToDatabase(author.name);
-			// 	authorsId.push(id);
-			// });
 			const requestBody = {
 				title: courseData.title,
 				description: courseData.description,
@@ -127,10 +119,7 @@ const CreateCourse = () => {
 				authors: authorsId,
 			};
 			dispatch(addCourseAction(requestBody));
-			// createCourseApiRequest(requestBody);
 			navigate('/courses');
-			// fetchAuthorsFromService();
-			// fetchCoursesFromService();
 		} else {
 			if (!titleValidation) {
 				setErrors((prevErrors) => ({
@@ -166,7 +155,7 @@ const CreateCourse = () => {
 					value={courseData.title}
 					onChange={handleInputChange}
 				/>
-				{errors.title && <p>{errors.title}</p>}
+				{errors.title && <p className='error_text'>{errors.title}</p>}
 				<CreateInput
 					id='description'
 					placeholder='Input description'
@@ -175,7 +164,9 @@ const CreateCourse = () => {
 					value={courseData.description}
 					onChange={handleInputChange}
 				/>
-				{errors.description && <p>{errors.description}</p>}
+				{errors.description && (
+					<p className='error_text'>{errors.description}</p>
+				)}
 
 				<p className='titles_container_createCourse'>Duration</p>
 				<div className='duration_container'>
@@ -188,7 +179,7 @@ const CreateCourse = () => {
 							value={courseData.duration}
 							onChange={handleInputChange}
 						/>
-						{errors.duration && <p>{errors.duration}</p>}
+						{errors.duration && <p className='error_text'>{errors.duration}</p>}
 					</div>
 
 					<span className='duration_format'>
@@ -220,8 +211,8 @@ const CreateCourse = () => {
 							courseData.authors.map((e) => {
 								return (
 									<AuthorItem
-										key={e.id}
-										onClickAuthors={() => removeAuthor(e.id)}
+										key={e.id + 'courseList'}
+										removeAuthor={() => removeAuthorFromCourseData(e.id)}
 										name={e.name}
 										type='courseAuthors'
 									/>
@@ -232,16 +223,19 @@ const CreateCourse = () => {
 				</div>
 				<div className='constainer_authorsList'>
 					<p className='title_authorsList'>Authors list:</p>
-					{authorsList.map((e: Author) => {
-						return (
-							<AuthorItem
-								key={e.id}
-								onClickAuthors={() => addAuthor(e.id)}
-								type='authorsList'
-								name={e.name}
-							/>
-						);
-					})}
+					{authorsListState.length
+						? authorsListState?.map((e: AuthorType) => {
+								return (
+									<AuthorItem
+										key={e.id + 'authorsList'}
+										addAuthor={() => addAuthor(e.id)}
+										removeAuthor={() => removeAuthor(e.id)}
+										type='authorsList'
+										name={e.name}
+									/>
+								);
+							})
+						: ''}
 				</div>
 			</div>
 			<div className='cancel_create_buttons_container'>

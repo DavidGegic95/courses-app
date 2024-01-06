@@ -9,6 +9,12 @@ export function authorsReducer(
 	switch (action.type) {
 		case AuthorsActionTypes.SAVE_AUTHORS:
 			return [...action.payload];
+		case AuthorsActionTypes.ADD_AUTHOR:
+			return [...state, action.payload];
+		case AuthorsActionTypes.REMOVE_AUTHOR:
+			// eslint-disable-next-line no-case-declarations
+			const newList = [...state].filter((a) => a.id !== action.payload);
+			return [...newList];
 
 		default:
 			return state;

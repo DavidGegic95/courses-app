@@ -8,3 +8,7 @@ export const removeAuthorAction = (payload: AuthorType[]) => ({
 	type: AuthorsActionTypes.REMOVE_AUTHOR,
 	payload: payload,
 });
+export const addAuthorActions = (payload: AuthorType) => ({
+	type: AuthorsActionTypes.ADD_AUTHOR,
+	payload: payload,
+});

@@ -15,3 +15,6 @@ body {
 .error {
 	border: 1px solid #ff0000 !important;
 }
+.error_text {
+	color: #ff0000 !important;
+}

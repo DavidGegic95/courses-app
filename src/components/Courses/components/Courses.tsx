@@ -26,7 +26,7 @@ const Courses = () => {
 	useEffect(() => {
 		fetchAndSaveAuthors();
 	}, []);
-	//eslint_disable-next-line
+
 	const coursesState = useSelector(getCourses);
 
 	async function fetchAndSetCoures() {
@@ -37,12 +37,6 @@ const Courses = () => {
 	useEffect(() => {
 		fetchAndSetCoures();
 	}, []);
-	// useEffect(() => {
-	// 	if (searchQuery === '') {
-	// 		setIsSearchClicked(false);
-	// 		setCourseList(mockedCoursesList);
-	// 	}
-	// }, [searchQuery]);
 
 	return (
 		<div className='courses_component'>
@@ -51,8 +45,6 @@ const Courses = () => {
 					setIsSearchClicked={setIsSearchClicked}
 					searchQuery={searchQuery}
 					setSearchQuery={setSearchQuery}
-					// courseList={courseList}
-					// setCourseList={setCourseList}
 				/>
 				<Link className='addCourse_button' to={'/courses/add'}>
 					Add New Course
@@ -62,7 +54,7 @@ const Courses = () => {
 			{coursesState?.length !== 0 ? (
 				coursesState?.map((e) => (
 					<CourseCard
-						key={e.id}
+						key={e.id + 'courseCard'}
 						courseId={e.id}
 						title={e.title}
 						duration={e.duration}

@@ -8,6 +8,7 @@ import { getUser } from '../../helpers/selectors';
 import './header.css';
 import { logutUserFromService } from '../../services';
 import { userThunkAction } from '../../store/user/thunk';
+import { coursesThunkFunction } from '../../store/courses/thunk';
 
 const Header = () => {
 	const userState = useSelector(getUser);
@@ -24,6 +25,7 @@ const Header = () => {
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			userThunkAction(dispatch);
+			coursesThunkFunction(dispatch);
 		}
 	}, []);
 	return (

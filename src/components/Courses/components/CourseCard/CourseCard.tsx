@@ -69,7 +69,7 @@ const CourseCard = ({
 								<Button
 									name='icon_button'
 									buttonText='editIcon'
-									onClick={() => console.log(`onclick edit ${courseId}`)}
+									onClick={() => navigate(`/courses/update/${courseId}`)}
 								/>
 							</>
 						)}

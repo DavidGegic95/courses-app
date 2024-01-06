@@ -20,7 +20,7 @@ root.render(
 			<Header />
 			<Routes>
 				<Route path='/' element={<App />} />
-				<Route path='/courses/add' element={<CreateCourse />} />
+				{/* <Route path='/courses/add' element={<CreateCourse />} /> */}
 				<Route path='/courses' element={<Courses />} />
 				<Route
 					path='/courses/add'
@@ -30,6 +30,15 @@ root.render(
 						</PrivateRoute>
 					}
 				/>
+				<Route
+					path='/courses/update/:courseId'
+					element={
+						<PrivateRoute>
+							<CreateCourse />
+						</PrivateRoute>
+					}
+				/>
+
 				<Route path='/courses/:courseId' element={<CourseInfo />} />
 				<Route path='login' element={<Login />} />
 				<Route path='registration' element={<Registration />} />

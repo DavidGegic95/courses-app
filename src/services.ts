@@ -153,3 +153,32 @@ export async function addAuthorToBackendFromServices(author: { name: string }) {
 		throw error;
 	}
 }
+
+export const editCourseFromService = async (
+	courseId: string,
+	requestBody: CourseType
+) => {
+	requestBody = {
+		...requestBody,
+		duration: Number(requestBody.duration),
+	};
+	try {
+		const response = await fetch(`http://localhost:4000/courses/${courseId}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+			body: JSON.stringify(requestBody),
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to edit course. Status: ${response.status}`);
+		}
+		const data = await response.json();
+		return data.result;
+	} catch (error) {
+		console.error('Error deliting course.');
+		throw error;
+	}
+};

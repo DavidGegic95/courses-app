@@ -1,53 +1,64 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import CreateInput from '../../common/CreateInput/CreateInput';
 import './createCourse.css';
 import { formatDuration } from '../../helpers/getCourseDuration';
-import { v4 as uuidv4 } from 'uuid';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
-import { newDate } from '../../helpers/newDate';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthors } from '../../helpers/selectors';
+import { getAuthors, getCourses } from '../../helpers/selectors';
 import { AuthorType } from '../../store/authors/types';
-import { addCourseThunkFunction } from '../../store/courses/thunk';
+import {
+	addCourseThunkFunction,
+	editCourseThunkFunction,
+} from '../../store/courses/thunk';
 import { addAuthorThunkFunction } from '../../store/authors/thunk';
 
 const CreateCourse = () => {
+	const { courseId } = useParams();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authorsList = useSelector(getAuthors);
+	const coursesList = useSelector(getCourses);
 	const [authorsListState, setAuthorsListState] = useState([] as string[]);
 	const [singleAuthor, setSingleAuthor] = useState({
 		name: '',
 	});
 	const [courseData, setCourseData] = useState({
-		id: uuidv4(),
 		title: '',
 		description: '',
-		creationDate: newDate(),
-		duration: 1,
+		duration: 0,
 		authors: [] as AuthorType[],
 	});
 	const [errors, setErrors] = useState({
-		id: '',
 		title: '',
 		description: '',
-		creationDate: '',
 		duration: '',
 		authors: '',
 	});
 
-	// const addAuthorToList = (newAuthor: AuthorType) => {
-	// 	if (singleAuthor.name !== '') {
-	// 		dispatch(addAuthorActions(newAuthor));
-	// 		setAuthorsListState((prev) => [...prev, newAuthor]);
-	// 		setSingleAuthor({
-	// 			name: '',
-	// 			id: uuidv4(),
-	// 		});
-	// 	}
-	// };
+	useEffect(() => {
+		if (courseId) {
+			const currentCourse = coursesList.find((course) => {
+				return course.id === courseId;
+			});
+			const authors: AuthorType[] = [];
+			currentCourse?.authors.forEach((id) => {
+				authorsList.forEach((e) => {
+					if (e.id === id) {
+						authors.push(e);
+					}
+				});
+			});
+
+			setCourseData({
+				title: currentCourse?.title || '',
+				description: currentCourse?.description || '',
+				duration: currentCourse?.duration || 0,
+				authors: authors,
+			});
+		}
+	}, []);
 
 	const removeAuthor = (authorId: string) => {
 		const newList = authorsListState.filter((author) => author !== authorId);
@@ -72,7 +83,6 @@ const CreateCourse = () => {
 			setCourseData((prevData) => {
 				return { ...prevData, authors: [...prevData.authors, addedAuthor!] };
 			});
-			// dispatch(addAuthorActions(addedAuthor!));
 		}
 	};
 
@@ -118,8 +128,9 @@ const CreateCourse = () => {
 				duration: courseData.duration,
 				authors: authorsId,
 			};
-
-			addCourseThunkFunction(dispatch, requestBody);
+			!courseId
+				? addCourseThunkFunction(dispatch, requestBody)
+				: editCourseThunkFunction(dispatch, courseId, requestBody);
 			navigate('/courses');
 		} else {
 			if (!titleValidation) {
@@ -201,6 +212,7 @@ const CreateCourse = () => {
 						onClick={() => {
 							addAuthorThunkFunction(dispatch, { name: singleAuthor.name });
 							setAuthorsListState((prev) => [...prev, singleAuthor.name]);
+							setSingleAuthor({ name: '' });
 						}}
 						name='create_author_button'
 						buttonText='Create Author'
@@ -251,7 +263,7 @@ const CreateCourse = () => {
 				<Button
 					onClick={createCourse}
 					name='create_course_button__createCourse'
-					buttonText='CREATE COURSE'
+					buttonText={!courseId ? 'CREATE COURSE' : 'EDIT COURSE'}
 				/>
 			</div>
 		</div>

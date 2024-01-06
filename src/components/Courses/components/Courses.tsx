@@ -4,16 +4,18 @@ import CourseCard from './CourseCard/CourseCard';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
 import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
-import { getCourses } from '../../../helpers/selectors';
+import { getCourses, getUser } from '../../../helpers/selectors';
 import { coursesThunkFunction } from '../../../store/courses/thunk';
 import { authorsThunkFunction } from '../../../store/authors/thunk';
 import './courses.css';
 import { userThunkAction } from '../../../store/user/thunk';
 
 const Courses = () => {
+	//eslint-disable-next-line
 	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const coursesState = useSelector(getCourses);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	const userState = useSelector(getUser);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -26,31 +28,32 @@ const Courses = () => {
 
 	return (
 		<div className='courses_component'>
-			<div className='searchBar_link_wrapper'>
-				<SearchBar
-					setIsSearchClicked={setIsSearchClicked}
-					searchQuery={searchQuery}
-					setSearchQuery={setSearchQuery}
-				/>
-				<Link className='addCourse_button' to={'/courses/add'}>
-					Add New Course
-				</Link>
-			</div>
-
 			{coursesState?.length !== 0 ? (
-				coursesState?.map((e) => (
-					<CourseCard
-						key={e.id + 'courseCard'}
-						courseId={e.id}
-						title={e.title}
-						duration={e.duration}
-						description={e.description}
-						authors={e.authors}
-						creationDate={e.creationDate}
-					/>
-				))
-			) : isSearchClicked ? (
-				<p>No results match your search criteria.</p>
+				<>
+					<div className='searchBar_link_wrapper'>
+						<SearchBar
+							setIsSearchClicked={setIsSearchClicked}
+							searchQuery={searchQuery}
+							setSearchQuery={setSearchQuery}
+						/>
+						{userState.role === 'admin' && (
+							<Link className='addCourse_button' to={'/courses/add'}>
+								Add New Course
+							</Link>
+						)}
+					</div>
+					{coursesState?.map((e) => (
+						<CourseCard
+							key={e.id + 'courseCard'}
+							courseId={e.id}
+							title={e.title}
+							duration={e.duration}
+							description={e.description}
+							authors={e.authors}
+							creationDate={e.creationDate}
+						/>
+					))}
+				</>
 			) : (
 				<EmptyCourseList />
 			)}

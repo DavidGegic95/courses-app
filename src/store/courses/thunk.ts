@@ -2,6 +2,7 @@ import { Dispatch, UnknownAction } from '@reduxjs/toolkit';
 import {
 	addCourseToBackendFromServices,
 	deleteCourseFromService,
+	editCourseFromService,
 	fetchCoursesFromService,
 } from '../../services';
 import {
@@ -33,4 +34,14 @@ export const addCourseThunkFunction = async (
 	const response = await addCourseToBackendFromServices(courseInfo);
 
 	if (response.successful) dispatch(addCourseAction(courseInfo));
+};
+
+export const editCourseThunkFunction = async (
+	dispatch: Dispatch<UnknownAction>,
+	courseId: string,
+	courseInfo: CourseType
+) => {
+	const response = await editCourseFromService(courseId, courseInfo);
+	console.log(response);
+	dispatch(addCourseAction(response));
 };

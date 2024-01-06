@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import { formatDuration } from '../../helpers/getCourseDuration';
@@ -7,24 +7,21 @@ import { useSelector } from 'react-redux';
 import { selectAuthor } from '../../helpers/selectAuthorsFormat';
 import { getAuthors, getCourses } from '../../helpers/selectors';
 import './courseInfo.css';
-
-type Course = {
-	id?: string;
-	title: string;
-	description: string;
-	duration: number;
-	authors: string[];
-	creationDate?: string;
-};
+import { CourseType } from '../../store/courses/types';
 
 const CourseInfo = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
 	const coursesState = useSelector(getCourses);
 	const authorsState = useSelector(getAuthors);
-	const courseInfoState: Course | undefined = coursesState?.find(
-		(course) => course.id === courseId
+	const [courseInfoState, setCourseInfoState] = useState<CourseType>(
+		{} as CourseType
 	);
+
+	useEffect(() => {
+		const course = coursesState?.find((course) => course.id === courseId);
+		setCourseInfoState(course!);
+	}, [coursesState]);
 
 	return (
 		<div className='courseInfo'>

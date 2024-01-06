@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../../common/Button/Button';
@@ -7,6 +7,7 @@ import { logoutUser } from '../../store/user/actions';
 import { getUser } from '../../helpers/selectors';
 import './header.css';
 import { logutUserFromService } from '../../services';
+import { userThunkAction } from '../../store/user/thunk';
 
 const Header = () => {
 	const userState = useSelector(getUser);
@@ -20,7 +21,11 @@ const Header = () => {
 		dispatch(logoutUser());
 		navigate('/login');
 	}
-
+	useEffect(() => {
+		if (localStorage.getItem('token')) {
+			userThunkAction(dispatch);
+		}
+	}, []);
 	return (
 		<header>
 			<Logo />

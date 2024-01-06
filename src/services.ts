@@ -1,3 +1,5 @@
+import { CourseType } from './store/courses/types';
+
 export const fetchCoursesFromService = async () => {
 	try {
 		const response = await fetch('http://localhost:4000/courses/all', {
@@ -101,3 +103,53 @@ export const deleteCourseFromService = async (courseId: string) => {
 		throw error;
 	}
 };
+
+export async function addCourseToBackendFromServices(requestBody: CourseType) {
+	requestBody = {
+		...requestBody,
+		duration: Number(requestBody.duration),
+	};
+	try {
+		const response = await fetch('http://localhost:4000/courses/add', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+			body: JSON.stringify(requestBody),
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch courses. Status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching courses:');
+		throw error;
+	}
+}
+
+export async function addAuthorToBackendFromServices(author: { name: string }) {
+	try {
+		const response = await fetch('http://localhost:4000/authors/add', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+			body: JSON.stringify(author),
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch courses. Status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return data.result;
+	} catch (error) {
+		console.error('Error fetching courses:');
+		throw error;
+	}
+}

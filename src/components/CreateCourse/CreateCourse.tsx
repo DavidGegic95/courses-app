@@ -8,19 +8,18 @@ import AuthorItem from '../AuthorItem/AuthorItem';
 import { newDate } from '../../helpers/newDate';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCourseAction } from '../../store/courses/actions';
 import { getAuthors } from '../../helpers/selectors';
-import { addAuthorActions } from '../../store/authors/actions';
 import { AuthorType } from '../../store/authors/types';
+import { addCourseThunkFunction } from '../../store/courses/thunk';
+import { addAuthorThunkFunction } from '../../store/authors/thunk';
 
 const CreateCourse = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authorsList = useSelector(getAuthors);
-	const [authorsListState, setAuthorsListState] = useState([] as AuthorType[]);
+	const [authorsListState, setAuthorsListState] = useState([] as string[]);
 	const [singleAuthor, setSingleAuthor] = useState({
 		name: '',
-		id: uuidv4(),
 	});
 	const [courseData, setCourseData] = useState({
 		id: uuidv4(),
@@ -39,19 +38,19 @@ const CreateCourse = () => {
 		authors: '',
 	});
 
-	const addAuthorToList = (newAuthor: AuthorType) => {
-		if (singleAuthor.name !== '') {
-			dispatch(addAuthorActions(newAuthor));
-			setAuthorsListState((prev) => [...prev, newAuthor]);
-			setSingleAuthor({
-				name: '',
-				id: uuidv4(),
-			});
-		}
-	};
+	// const addAuthorToList = (newAuthor: AuthorType) => {
+	// 	if (singleAuthor.name !== '') {
+	// 		dispatch(addAuthorActions(newAuthor));
+	// 		setAuthorsListState((prev) => [...prev, newAuthor]);
+	// 		setSingleAuthor({
+	// 			name: '',
+	// 			id: uuidv4(),
+	// 		});
+	// 	}
+	// };
 
 	const removeAuthor = (authorId: string) => {
-		const newList = authorsListState.filter((author) => author.id !== authorId);
+		const newList = authorsListState.filter((author) => author !== authorId);
 		setAuthorsListState([...newList]);
 	};
 
@@ -62,18 +61,18 @@ const CreateCourse = () => {
 		setCourseData((prev) => ({ ...prev, authors: newList }));
 	};
 
-	const addAuthor = (authorId: string) => {
-		const courseDataAuthorsHasId = courseData.authors.find(
-			(e) => e.id === authorId
+	const addAuthor = (name: string) => {
+		const courseDataAuthorsHasName = courseData.authors.find(
+			(e) => e.name === name
 		);
-		if (!courseDataAuthorsHasId) {
+		if (!courseDataAuthorsHasName) {
 			const addedAuthor = authorsList.find(
-				(author: AuthorType) => author.id === authorId
+				(author: AuthorType) => author.name === name
 			);
 			setCourseData((prevData) => {
 				return { ...prevData, authors: [...prevData.authors, addedAuthor!] };
 			});
-			dispatch(addAuthorActions(addedAuthor!));
+			// dispatch(addAuthorActions(addedAuthor!));
 		}
 	};
 
@@ -109,6 +108,7 @@ const CreateCourse = () => {
 		const titleValidation = courseData.title.length >= 2;
 		const descriptionValidation = courseData.description.length >= 2;
 		const durationValidation = courseData.duration > 0;
+
 		if (titleValidation && descriptionValidation && durationValidation) {
 			const authorsIdAndName = courseData.authors;
 			const authorsId = authorsIdAndName.map((e) => e.id);
@@ -118,7 +118,8 @@ const CreateCourse = () => {
 				duration: courseData.duration,
 				authors: authorsId,
 			};
-			dispatch(addCourseAction(requestBody));
+
+			addCourseThunkFunction(dispatch, requestBody);
 			navigate('/courses');
 		} else {
 			if (!titleValidation) {
@@ -197,7 +198,10 @@ const CreateCourse = () => {
 						onChange={handleAuthorInputChange}
 					/>
 					<Button
-						onClick={() => addAuthorToList(singleAuthor)}
+						onClick={() => {
+							addAuthorThunkFunction(dispatch, { name: singleAuthor.name });
+							setAuthorsListState((prev) => [...prev, singleAuthor.name]);
+						}}
 						name='create_author_button'
 						buttonText='Create Author'
 					/>
@@ -224,14 +228,14 @@ const CreateCourse = () => {
 				<div className='constainer_authorsList'>
 					<p className='title_authorsList'>Authors list:</p>
 					{authorsListState.length
-						? authorsListState?.map((e: AuthorType) => {
+						? authorsListState?.map((e) => {
 								return (
 									<AuthorItem
-										key={e.id + 'authorsList'}
-										addAuthor={() => addAuthor(e.id)}
-										removeAuthor={() => removeAuthor(e.id)}
+										key={e + 'authorsList'}
+										addAuthor={() => addAuthor(e)}
+										removeAuthor={() => removeAuthor(e)}
 										type='authorsList'
-										name={e.name}
+										name={e}
 									/>
 								);
 							})

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import { useDispatch } from 'react-redux';
@@ -12,6 +12,10 @@ type UserRegistration = {
 const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		localStorage.clear();
+	}, []);
 	const [formData, setFormData] = useState<UserRegistration>({
 		password: '',
 		email: '',

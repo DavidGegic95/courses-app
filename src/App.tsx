@@ -6,7 +6,7 @@ function App() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (localStorage.getItem('token') && navigate) {
+		if (localStorage.getItem('token')) {
 			navigate('/courses');
 		} else {
 			navigate('/login');

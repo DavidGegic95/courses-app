@@ -210,9 +210,11 @@ const CreateCourse = () => {
 					/>
 					<Button
 						onClick={() => {
-							addAuthorThunkFunction(dispatch, { name: singleAuthor.name });
-							setAuthorsListState((prev) => [...prev, singleAuthor.name]);
-							setSingleAuthor({ name: '' });
+							if (singleAuthor.name) {
+								addAuthorThunkFunction(dispatch, { name: singleAuthor.name });
+								setAuthorsListState((prev) => [...prev, singleAuthor.name]);
+								setSingleAuthor({ name: '' });
+							}
 						}}
 						name='create_author_button'
 						buttonText='Create Author'

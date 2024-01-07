@@ -38,7 +38,6 @@ export const fetchAuthorsFromService = async () => {
 		return data.result;
 	} catch (error) {
 		console.error('Error fetching authors.');
-		throw error;
 	}
 };
 
@@ -57,10 +56,9 @@ export const fetchUserFromService = async () => {
 		}
 
 		const data = await response.json();
-		return data.result;
+		return data;
 	} catch (error) {
 		console.error('Error fetching user info');
-		throw error;
 	}
 };
 
@@ -79,7 +77,6 @@ export const logutUserFromService = async () => {
 		}
 	} catch (error) {
 		console.error('Error logout user.');
-		throw error;
 	}
 };
 
@@ -127,7 +124,6 @@ export async function addCourseToBackendFromServices(requestBody: CourseType) {
 		return data;
 	} catch (error) {
 		console.error('Error fetching courses:');
-		throw error;
 	}
 }
 
@@ -150,7 +146,6 @@ export async function addAuthorToBackendFromServices(author: { name: string }) {
 		return data.result;
 	} catch (error) {
 		console.error('Error fetching courses:');
-		throw error;
 	}
 }
 
@@ -179,6 +174,5 @@ export const editCourseFromService = async (
 		return data.result;
 	} catch (error) {
 		console.error('Error deliting course.');
-		throw error;
 	}
 };

@@ -17,6 +17,5 @@ export const addAuthorThunkFunction = async (
 	name: { name: string }
 ) => {
 	const response = await addAuthorToBackendFromServices(name);
-	console.log(response);
 	dispatch(addAuthorActions(response));
 };

@@ -26,12 +26,14 @@ const Header = () => {
 		if (localStorage.getItem('token')) {
 			userThunkAction(dispatch);
 			coursesThunkFunction(dispatch);
+		} else {
+			navigate('/login');
 		}
 	}, []);
 	return (
 		<header>
 			<Logo />
-			{userState.isAuth && (
+			{localStorage.getItem('token') && (
 				<div className='logout_user_wrapper'>
 					<p className='user_name'>{userState.name}</p>
 					<Button

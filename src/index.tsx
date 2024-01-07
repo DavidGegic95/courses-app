@@ -20,7 +20,6 @@ root.render(
 			<Header />
 			<Routes>
 				<Route path='/' element={<App />} />
-				{/* <Route path='/courses/add' element={<CreateCourse />} /> */}
 				<Route path='/courses' element={<Courses />} />
 				<Route
 					path='/courses/add'

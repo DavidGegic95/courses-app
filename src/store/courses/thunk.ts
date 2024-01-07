@@ -42,6 +42,5 @@ export const editCourseThunkFunction = async (
 	courseInfo: CourseType
 ) => {
 	const response = await editCourseFromService(courseId, courseInfo);
-	console.log(response);
 	dispatch(addCourseAction(response));
 };

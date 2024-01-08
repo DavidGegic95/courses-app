@@ -155,7 +155,7 @@ const CreateCourse = () => {
 	};
 
 	return (
-		<div className='createCourse_page'>
+		<div data-testid='create-course' className='createCourse_page'>
 			<h2 className='title_createCourse_page'>Course Edit/Create Page</h2>
 			<div className='container_createCourse'>
 				<p className='titles_container_createCourse'>Main info</p>

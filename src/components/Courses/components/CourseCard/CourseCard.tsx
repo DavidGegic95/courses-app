@@ -45,7 +45,7 @@ const CourseCard = ({
 							return selectAuthor(e, authorsList) + format;
 						})}
 					</p>
-					<p className='authors_course_card'>
+					<p data-testid='duration' className='authors_course_card'>
 						<span>Duration: </span>
 						{formatDuration(duration)} hours
 					</p>

@@ -31,12 +31,13 @@ const Header = () => {
 		}
 	}, []);
 	return (
-		<header>
-			<Logo />
+		<header data-testid='header'>
+			<Logo data-testid='logo' />
 			{localStorage.getItem('token') && (
 				<div className='logout_user_wrapper'>
 					<p className='user_name'>{userState.name}</p>
 					<Button
+						data-testid='logout'
 						onClick={onClickLogout}
 						name='button_header'
 						buttonText='Logout'

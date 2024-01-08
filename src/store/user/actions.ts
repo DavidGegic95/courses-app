@@ -1,6 +1,5 @@
 import { UserActionTypes, UserType } from './types';
 
-// Action Creators
 export const loginUser = (userData: UserType) => ({
 	type: UserActionTypes.LOGIN_USER,
 	payload: userData,

@@ -27,7 +27,7 @@ const CreateCourse = () => {
 		title: '',
 		description: '',
 		creationDate: newDate(),
-		duration: 1,
+		duration: 0,
 		authors: [] as AuthorType[],
 	});
 	const [errors, setErrors] = useState({

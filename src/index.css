@@ -9,4 +9,12 @@ html,
 body {
 	width: 100%;
 	min-height: 100vh;
+	background-color: #f7f7f7;
+}
+
+.error {
+	border: 1px solid #ff0000 !important;
+}
+.error_text {
+	color: #ff0000 !important;
 }

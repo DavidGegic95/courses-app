@@ -1,1 +1,3 @@
-export const date = new Date();
+export function formatDate(date: string): string {
+	return date?.replaceAll('/', '.');
+}

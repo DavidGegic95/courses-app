@@ -88,3 +88,9 @@
 	text-transform: uppercase;
 	color: #ffffff;
 }
+
+.icon_button {
+	border: none;
+	background-color: transparent;
+	outline: none;
+}

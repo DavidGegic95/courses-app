@@ -1,56 +1,60 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
-// import { mockedCoursesList } from '../../../constants';
-import './courses.css';
+import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
-type mockedCourse = {
-	id: string;
-	title: string;
-	duration: number;
-	description: string;
-	authors: string[];
-	creationDate: string;
-};
-type CourseInfoType = {
-	IdOfCourse: string;
-	title: string;
-	description: string;
-	duration: number;
-	listOfAuthors: string[];
-	creationDate: string;
-};
+import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
+import './courses.css';
+import { saveCoursesAction } from '../../../store/courses/actions';
+import { saveAuthorsAction } from '../../../store/authors/actions';
+import { getCourses } from '../../../helpers/selectors';
+import {
+	fetchAuthorsFromService,
+	fetchCoursesFromService,
+} from '../../../services';
 
-const Courses = ({
-	mockedCoursesList,
-	setCourseInfoState,
-}: {
-	mockedCoursesList: mockedCourse[];
-	setCourseInfoState: (arr: CourseInfoType | null) => void;
-}) => {
-	const [courseList, setCourseList] = useState<mockedCourse[]>();
+const Courses = () => {
+	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	const dispatch = useDispatch();
+
+	async function fetchAndSaveAuthors() {
+		const authorsList = await fetchAuthorsFromService();
+		dispatch(saveAuthorsAction(authorsList));
+	}
 
 	useEffect(() => {
-		setCourseList(mockedCoursesList);
+		fetchAndSaveAuthors();
 	}, []);
+
+	const coursesState = useSelector(getCourses);
+
+	async function fetchAndSetCoures() {
+		const courses = await fetchCoursesFromService();
+		dispatch(saveCoursesAction(courses));
+	}
+
 	useEffect(() => {
-		if (searchQuery === '') {
-			setCourseList(mockedCoursesList);
-		}
-	}, [searchQuery]);
+		fetchAndSetCoures();
+	}, []);
+
 	return (
 		<div className='courses_component'>
-			<SearchBar
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-				courseList={courseList}
-				setCourseList={setCourseList}
-			/>
-			{courseList?.length !== 0 ? (
-				courseList?.map((e) => (
+			<div className='searchBar_link_wrapper'>
+				<SearchBar
+					setIsSearchClicked={setIsSearchClicked}
+					searchQuery={searchQuery}
+					setSearchQuery={setSearchQuery}
+				/>
+				<Link className='addCourse_button' to={'/courses/add'}>
+					Add New Course
+				</Link>
+			</div>
+
+			{coursesState?.length !== 0 ? (
+				coursesState?.map((e) => (
 					<CourseCard
-						setCourseInfoState={setCourseInfoState}
-						key={e.id}
+						key={e.id + 'courseCard'}
 						courseId={e.id}
 						title={e.title}
 						duration={e.duration}
@@ -59,8 +63,10 @@ const Courses = ({
 						creationDate={e.creationDate}
 					/>
 				))
-			) : (
+			) : isSearchClicked ? (
 				<p>No results match your search criteria.</p>
+			) : (
+				<EmptyCourseList />
 			)}
 		</div>
 	);

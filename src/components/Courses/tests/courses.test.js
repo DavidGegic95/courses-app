@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import Courses from '../components/Courses';
-import CreateCourse from '../../CreateCourse/CreateCourse';
 import { initialState } from './mockedInitialTest';
+import CreateCourse from '../../CreateCourse/CreateCourse';
 
 jest.mock('../../../store/user/thunk');
 jest.mock('../../../store/authors/thunk');
@@ -36,19 +36,20 @@ describe("Courses component", () => {
         const store = configureStore()(initialState);
         render(
             <Provider store={store}>
-                <MemoryRouter >
-                    <Courses />
-                    <CreateCourse />
+                <MemoryRouter initialEntries={['/courses']}>
+                    <Routes>
+                        <Route path="/courses" element={<Courses />} />
+                        <Route path="/courses/add" element={<CreateCourse />} />
+                    </Routes>
                 </MemoryRouter>
-            </Provider >
-        );
+            </Provider>
+        )
 
         const addCourseButton = screen.getByText('Add New Course');
-        fireEvent.click(addCourseButton);
+        fireEvent.click(addCourseButton)
 
-        await waitFor(() => {
-            const courseForm = screen.getByTestId("create-course");
-            expect(courseForm).toBeInTheDocument();
-        });
+        const createCourseComponent = screen.getByTestId('create-course');
+        expect(createCourseComponent).toBeInTheDocument();;
+
     });
 })

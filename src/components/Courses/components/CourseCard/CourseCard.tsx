@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAuthors, getUser } from '../../../../helpers/selectors';
 import { deletCourseThunkFunction } from '../../../../store/courses/thunk';
 import './courseCard.css';
+import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { RootState } from '../../../../store';
 
 const CourseCard = ({
 	title,
@@ -25,7 +27,8 @@ const CourseCard = ({
 	courseId: string;
 }) => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch =
+		useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 	const authorsList = useSelector(getAuthors);
 	const userState = useSelector(getUser);
 
@@ -64,7 +67,7 @@ const CourseCard = ({
 								<Button
 									name='icon_button'
 									buttonText='trashIcon'
-									onClick={() => deletCourseThunkFunction(dispatch, courseId)}
+									onClick={() => dispatch(deletCourseThunkFunction(courseId))}
 								/>
 								<Button
 									name='icon_button'

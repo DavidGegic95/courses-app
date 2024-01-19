@@ -13,11 +13,14 @@ import {
 	editCourseThunkFunction,
 } from '../../store/courses/thunk';
 import { addAuthorThunkFunction } from '../../store/authors/thunk';
+import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
 
 const CreateCourse = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch =
+		useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 	const authorsList = useSelector(getAuthors);
 	const coursesList = useSelector(getCourses);
 	const [authorsListState, setAuthorsListState] = useState([] as string[]);
@@ -129,8 +132,8 @@ const CreateCourse = () => {
 				authors: authorsId,
 			};
 			!courseId
-				? addCourseThunkFunction(dispatch, requestBody)
-				: editCourseThunkFunction(dispatch, courseId, requestBody);
+				? dispatch(addCourseThunkFunction(requestBody))
+				: dispatch(editCourseThunkFunction(courseId, requestBody));
 			navigate('/courses');
 		} else {
 			if (!titleValidation) {
@@ -211,7 +214,7 @@ const CreateCourse = () => {
 					<Button
 						onClick={() => {
 							if (singleAuthor.name) {
-								addAuthorThunkFunction(dispatch, { name: singleAuthor.name });
+								dispatch(addAuthorThunkFunction({ name: singleAuthor.name }));
 								setAuthorsListState((prev) => [...prev, singleAuthor.name]);
 								setSingleAuthor({ name: '' });
 							}

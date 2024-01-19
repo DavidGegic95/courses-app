@@ -1,6 +1,3 @@
-// actions.js
-
-// import * from './types.js'
 import { CoursesActionTypes, CourseType } from './types';
 
 export const addCourseAction = (payload: CourseType) => ({

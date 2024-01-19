@@ -9,10 +9,13 @@ import './header.css';
 import { logutUserFromService } from '../../services';
 import { userThunkAction } from '../../store/user/thunk';
 import { coursesThunkFunction } from '../../store/courses/thunk';
+import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
 
 const Header = () => {
 	const userState = useSelector(getUser);
-	const dispatch = useDispatch();
+	const dispatch =
+		useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 	const navigate = useNavigate();
 
 	function onClickLogout() {
@@ -24,8 +27,8 @@ const Header = () => {
 	}
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
-			userThunkAction(dispatch);
-			coursesThunkFunction(dispatch);
+			dispatch(userThunkAction);
+			dispatch(coursesThunkFunction());
 		} else {
 			navigate('/login');
 		}

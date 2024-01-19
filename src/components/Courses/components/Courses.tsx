@@ -11,6 +11,7 @@ import './courses.css';
 import { userThunkAction } from '../../../store/user/thunk';
 import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
+import { v4 as uuidv4 } from 'uuid';
 
 const Courses = () => {
 	const coursesState = useSelector(getCourses);
@@ -44,7 +45,7 @@ const Courses = () => {
 					</div>
 					{coursesState?.map((e) => (
 						<CourseCard
-							key={e.id + 'courseCard'}
+							key={e.id + uuidv4()}
 							courseId={e.id}
 							title={e.title}
 							duration={e.duration}

@@ -11,6 +11,7 @@ import { userThunkAction } from '../../store/user/thunk';
 import { coursesThunkFunction } from '../../store/courses/thunk';
 import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
+import { authorsThunkFunction } from '../../store/authors/thunk';
 
 const Header = () => {
 	const userState = useSelector(getUser);
@@ -29,6 +30,7 @@ const Header = () => {
 		if (localStorage.getItem('token')) {
 			dispatch(userThunkAction);
 			dispatch(coursesThunkFunction());
+			dispatch(authorsThunkFunction());
 		} else {
 			navigate('/login');
 		}

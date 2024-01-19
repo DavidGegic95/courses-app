@@ -13,7 +13,6 @@ export function authorsReducer(
 			return [...state, action.payload];
 		case AuthorsActionTypes.REMOVE_AUTHOR:
 			return [...[...state].filter((a) => a.id !== action.payload)];
-
 		default:
 			return state;
 	}

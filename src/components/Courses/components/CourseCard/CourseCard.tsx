@@ -58,6 +58,7 @@ const CourseCard = ({
 					</p>
 					<div className='buttons-wrapper_course_card'>
 						<Button
+							key={`${courseId}Button1`}
 							onClick={() => navigate(`/courses/${courseId}`)}
 							name='button_show_course'
 							buttonText='Show Course'
@@ -65,11 +66,15 @@ const CourseCard = ({
 						{userState.role === 'admin' && (
 							<>
 								<Button
+									courseId={courseId}
+									key={`${courseId}Button2`}
 									name='icon_button'
 									buttonText='trashIcon'
 									onClick={() => dispatch(deletCourseThunkFunction(courseId))}
 								/>
 								<Button
+									courseId={courseId}
+									key={`${courseId}Button3`}
 									name='icon_button'
 									buttonText='editIcon'
 									onClick={() => navigate(`/courses/update/${courseId}`)}

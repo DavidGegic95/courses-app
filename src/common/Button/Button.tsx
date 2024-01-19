@@ -7,16 +7,18 @@ const Button = ({
 	name,
 	onClick,
 	type,
+	courseId,
 }: {
 	buttonText: string;
 	name?: string;
 	onClick?: () => void;
 	type?: 'submit';
+	courseId?: string;
 }) => {
 	return (
 		<button type={type} onClick={onClick} className={name}>
-			{buttonText === 'trashIcon' && <TrashIcon />}
-			{buttonText === 'editIcon' && <EditIcon />}
+			{buttonText === 'trashIcon' && <TrashIcon key={courseId + 'trash'} />}
+			{buttonText === 'editIcon' && <EditIcon key={courseId + 'edit'} />}
 			{buttonText !== 'trashIcon' && buttonText !== 'editIcon' && buttonText}
 		</button>
 	);

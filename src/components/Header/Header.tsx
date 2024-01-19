@@ -40,7 +40,9 @@ const Header = () => {
 			<Logo />
 			{localStorage.getItem('token') && (
 				<div className='logout_user_wrapper'>
-					<p className='user_name'>{userState.name}</p>
+					<p className='user_name'>
+						{userState.name ? userState.name : localStorage.getItem('user')}
+					</p>
 					<Button
 						onClick={onClickLogout}
 						name='button_header'

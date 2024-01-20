@@ -12,13 +12,9 @@ export function coursesReducer(
 		case CoursesActionTypes.ADD_COURSE:
 			return [...state, action.payload];
 		case CoursesActionTypes.DELETE_COURSE:
-			// eslint-disable-next-line no-case-declarations
-			const courseIdToDelete = action.payload;
-			// eslint-disable-next-line no-case-declarations
-			const filteredCourses = state.filter(
-				(course) => course.id !== courseIdToDelete
-			);
-			return [...filteredCourses];
+			return [...state.filter((course) => course.id !== action.payload)];
+		case CoursesActionTypes.GET_COURSES:
+			return action.payload;
 
 		default:
 			return state;

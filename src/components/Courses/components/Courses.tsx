@@ -9,20 +9,22 @@ import { coursesThunkFunction } from '../../../store/courses/thunk';
 import { authorsThunkFunction } from '../../../store/authors/thunk';
 import './courses.css';
 import { userThunkAction } from '../../../store/user/thunk';
+import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { RootState } from '../../../store';
+import { v4 as uuidv4 } from 'uuid';
 
 const Courses = () => {
-	//eslint-disable-next-line
-	const [isSearchClicked, setIsSearchClicked] = useState(false);
 	const coursesState = useSelector(getCourses);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const userState = useSelector(getUser);
-	const dispatch = useDispatch();
+	const dispatch =
+		useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 
 	useEffect(() => {
-		authorsThunkFunction(dispatch);
-		coursesThunkFunction(dispatch);
+		dispatch(authorsThunkFunction());
+		dispatch(coursesThunkFunction());
 		if (localStorage.getItem('token')) {
-			userThunkAction(dispatch);
+			dispatch(userThunkAction());
 		}
 	}, []);
 
@@ -32,7 +34,6 @@ const Courses = () => {
 				<>
 					<div className='searchBar_link_wrapper'>
 						<SearchBar
-							setIsSearchClicked={setIsSearchClicked}
 							searchQuery={searchQuery}
 							setSearchQuery={setSearchQuery}
 						/>
@@ -44,7 +45,7 @@ const Courses = () => {
 					</div>
 					{coursesState?.map((e) => (
 						<CourseCard
-							key={e.id + 'courseCard'}
+							key={e.id + uuidv4()}
 							courseId={e.id}
 							title={e.title}
 							duration={e.duration}

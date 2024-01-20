@@ -4,15 +4,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import Header from '../Header';
 
-jest.mock('../../../store/user/thunk');
-jest.mock('../../../store/courses/thunk');
+
 
 describe('Header component', () => {
-    const mockStore = configureStore();
-    const initialState = {
+
+    const logedInState = {
         user: {
             name: 'John Doe',
             isAuth: true,
@@ -34,7 +32,12 @@ describe('Header component', () => {
     });
 
     it('renders logo and user name when the user is logged in', () => {
-        store = mockStore(initialState);
+        const mockedStore = {
+            getState: () => logedInState,
+            subscribe: jest.fn(),
+            dispatch: jest.fn(),
+        };
+        store = mockedStore;
         localStorage.setItem("token", "token")
         render(
             <Provider store={store}>
@@ -48,7 +51,12 @@ describe('Header component', () => {
     });
 
     it('renders logout button when the user is logged in', () => {
-        store = mockStore(initialState);
+        const mockedStore = {
+            getState: () => logedInState,
+            subscribe: jest.fn(),
+            dispatch: jest.fn(),
+        };
+        store = mockedStore;
         localStorage.setItem("token", "token")
 
         render(
@@ -62,8 +70,12 @@ describe('Header component', () => {
     });
 
     it('does not render user name and logout button when the user is not logged in', () => {
-
-        store = mockStore(logoutState);
+        const mockedStore = {
+            getState: () => logoutState,
+            subscribe: jest.fn(),
+            dispatch: jest.fn(),
+        };
+        store = mockedStore;
         render(
             <Provider store={store}>
                 <MemoryRouter>

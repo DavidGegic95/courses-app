@@ -176,3 +176,24 @@ export const editCourseFromService = async (
 		console.error('Error deliting course.');
 	}
 };
+
+export async function removeAuthorFromBackendFromServices(authorId: string) {
+	try {
+		const response = await fetch(`http://localhost:4000/authors/${authorId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch courses. Status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching courses:');
+	}
+}

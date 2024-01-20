@@ -12,17 +12,13 @@ type mockedCourse = {
 };
 
 const SearchBar = ({
-	// setCourseList,
-	// courseList,
 	setSearchQuery,
 	searchQuery,
-	setIsSearchClicked,
 }: {
 	setCourseList?: Dispatch<SetStateAction<mockedCourse[] | undefined>>;
 	courseList?: mockedCourse[] | undefined;
 	setSearchQuery: Dispatch<React.SetStateAction<string>>;
 	searchQuery: string;
-	setIsSearchClicked: Dispatch<SetStateAction<boolean>>;
 }) => {
 	return (
 		<div className='searchBar'>
@@ -32,12 +28,7 @@ const SearchBar = ({
 				inputData={searchQuery}
 				placeholder='Input text'
 			/>
-			<SearchButton
-				setIsSearchClicked={setIsSearchClicked}
-				// courseList={courseList}
-				searchQuery={searchQuery}
-				// setCourseList={setCourseList}
-			/>
+			<SearchButton searchQuery={searchQuery} />
 		</div>
 	);
 };

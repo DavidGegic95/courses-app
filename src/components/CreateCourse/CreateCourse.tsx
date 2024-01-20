@@ -12,15 +12,20 @@ import {
 	addCourseThunkFunction,
 	editCourseThunkFunction,
 } from '../../store/courses/thunk';
-import { addAuthorThunkFunction } from '../../store/authors/thunk';
+import {
+	addAuthorThunkFunction,
+	removeAuthorThunkFunction,
+} from '../../store/authors/thunk';
+import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
 
 const CreateCourse = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch =
+		useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 	const authorsList = useSelector(getAuthors);
 	const coursesList = useSelector(getCourses);
-	const [authorsListState, setAuthorsListState] = useState([] as string[]);
 	const [singleAuthor, setSingleAuthor] = useState({
 		name: '',
 	});
@@ -59,11 +64,6 @@ const CreateCourse = () => {
 			});
 		}
 	}, []);
-
-	const removeAuthor = (authorId: string) => {
-		const newList = authorsListState.filter((author) => author !== authorId);
-		setAuthorsListState([...newList]);
-	};
 
 	const removeAuthorFromCourseData = (authorId: string) => {
 		const newList = courseData.authors.filter(
@@ -129,8 +129,8 @@ const CreateCourse = () => {
 				authors: authorsId,
 			};
 			!courseId
-				? addCourseThunkFunction(dispatch, requestBody)
-				: editCourseThunkFunction(dispatch, courseId, requestBody);
+				? dispatch(addCourseThunkFunction(requestBody))
+				: dispatch(editCourseThunkFunction(courseId, requestBody));
 			navigate('/courses');
 		} else {
 			if (!titleValidation) {
@@ -211,8 +211,7 @@ const CreateCourse = () => {
 					<Button
 						onClick={() => {
 							if (singleAuthor.name) {
-								addAuthorThunkFunction(dispatch, { name: singleAuthor.name });
-								setAuthorsListState((prev) => [...prev, singleAuthor.name]);
+								dispatch(addAuthorThunkFunction({ name: singleAuthor.name }));
 								setSingleAuthor({ name: '' });
 							}
 						}}
@@ -229,7 +228,7 @@ const CreateCourse = () => {
 							courseData.authors.map((e) => {
 								return (
 									<AuthorItem
-										key={e.id + 'courseList'}
+										key={`${e.id}AuthorItem`}
 										removeAuthor={() => removeAuthorFromCourseData(e.id)}
 										name={e.name}
 										type='courseAuthors'
@@ -241,15 +240,17 @@ const CreateCourse = () => {
 				</div>
 				<div className='constainer_authorsList'>
 					<p className='title_authorsList'>Authors list:</p>
-					{authorsListState.length
-						? authorsListState?.map((e) => {
+					{authorsList.length
+						? authorsList?.map((e) => {
 								return (
 									<AuthorItem
-										key={e + 'authorsList'}
-										addAuthor={() => addAuthor(e)}
-										removeAuthor={() => removeAuthor(e)}
+										key={`${e.id}AuthorList`}
+										addAuthor={() => addAuthor(e.name)}
+										removeAuthor={() =>
+											dispatch(removeAuthorThunkFunction(e.id))
+										}
 										type='authorsList'
-										name={e}
+										name={e.name}
 									/>
 								);
 							})

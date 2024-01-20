@@ -6,7 +6,7 @@ import { mockedCoursesList } from './mockedCourseList';
 
 describe('coursesReducer', () => {
     it(" reducer should return the initial state", () => {
-        const initialState = mockedCoursesList
+        const initialState = []
         const newState = coursesReducer(initialState, { type: "Default" })
         expect(newState).toEqual(initialState)
     })
@@ -21,3 +21,5 @@ describe('coursesReducer', () => {
         expect(newState).toEqual(mockedCoursesList);
     });
 });
+
+

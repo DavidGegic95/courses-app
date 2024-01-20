@@ -2,7 +2,7 @@ import { CourseType, CoursesActionTypes, CoursesAction } from './types';
 
 const initCoursesState = [] as CourseType[];
 
-export default function coursesReducer(
+export function coursesReducer(
 	state = initCoursesState,
 	action: CoursesAction
 ) {

@@ -15,33 +15,33 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
-	<Provider store={store}>
-		<BrowserRouter>
-			<Header />
-			<Routes>
-				<Route path='/' element={<App />} />
-				<Route path='/courses' element={<Courses />} />
-				<Route
-					path='/courses/add'
-					element={
-						<PrivateRoute>
-							<CreateCourse />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					path='/courses/update/:courseId'
-					element={
-						<PrivateRoute>
-							<CreateCourse />
-						</PrivateRoute>
-					}
-				/>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path='/' element={<App />} />
+        <Route path='/courses' element={<Courses />} />
+        <Route
+          path='/courses/add'
+          element={
+            <PrivateRoute>
+              <CreateCourse />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/courses/update/:courseId'
+          element={
+            <PrivateRoute>
+              <CreateCourse />
+            </PrivateRoute>
+          }
+        />
 
-				<Route path='/courses/:courseId' element={<CourseInfo />} />
-				<Route path='login' element={<Login />} />
-				<Route path='registration' element={<Registration />} />
-			</Routes>
-		</BrowserRouter>
-	</Provider>
+        <Route path='/courses/:courseId' element={<CourseInfo />} />
+        <Route path='login' element={<Login />} />
+        <Route path='registration' element={<Registration />} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );

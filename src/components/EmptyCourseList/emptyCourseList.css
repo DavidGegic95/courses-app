@@ -1,45 +1,45 @@
 .emptyCourseList_component {
-	min-height: 100vh;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	row-gap: 20px;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 20px;
 }
 
 .add_button_empty_course_list {
-	border: none;
-	outline: none;
-	padding: 13px 36px;
-	background: #007298;
-	border-radius: 4px;
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 24px;
-	text-align: center;
-	text-transform: uppercase;
-	color: #ffffff;
+  border: none;
+  outline: none;
+  padding: 13px 36px;
+  background: #007298;
+  border-radius: 4px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
 .subtitle_emptyCourseList {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
-	text-align: center;
-	color: #333e48;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #333e48;
 }
 
 .title_emptyCourseList {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 32px;
-	line-height: 40px;
-	text-transform: capitalize;
-	color: #333e48;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  text-transform: capitalize;
+  color: #333e48;
 }

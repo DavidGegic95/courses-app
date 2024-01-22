@@ -1,116 +1,116 @@
 .title__coureInfo {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 32px;
-	line-height: 40px;
-	text-transform: capitalize;
-	color: #333e48;
-	align-self: flex-start;
-	margin-bottom: 20px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  text-transform: capitalize;
+  color: #333e48;
+  align-self: flex-start;
+  margin-bottom: 20px;
 }
 
 .courseInfo {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10%;
 }
 
 .card-wrapper__courseInfo {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	flex-direction: column;
-	padding: 54px;
-	border: 1px solid #cfcfcf;
-	border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 54px;
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
 }
 
 .inner-card-wrapper__courseInfo {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .description_title__courseInfo {
-	margin-bottom: 20px;
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 20px;
-	line-height: 20px;
-	color: #333e48;
+  margin-bottom: 20px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: #333e48;
 }
 .description__course {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
-	color: #333e48;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333e48;
 }
 .section__info_course {
-	display: flex;
-	align-items: stretch;
-	justify-content: space-between;
-	height: 100%;
-	border-left: 0.5px solid #cfcfcf;
-	padding-left: 20px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 100%;
+  border-left: 0.5px solid #cfcfcf;
+  padding-left: 20px;
 }
 
 .info_course__static,
 .info_course {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .span_info_bold {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 20px;
-	line-height: 32px;
-	text-transform: capitalize;
-	color: #333e48;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 32px;
+  text-transform: capitalize;
+  color: #333e48;
 }
 .span_info {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
-	color: #333e48;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333e48;
 }
 .span_bold_hours {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .section__description {
-	border-right: 0.5px solid #cfcfcf;
-	padding-right: 20px;
+  border-right: 0.5px solid #cfcfcf;
+  padding-right: 20px;
 }
 
 .back_button {
-	align-self: flex-end;
-	margin-top: 40px;
-	border: none;
-	outline: none;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 13px 36px;
-	gap: 10px;
-	background: #007298;
-	border-radius: 4px;
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 24px;
-	text-align: center;
-	text-transform: uppercase;
-	color: #ffffff;
+  align-self: flex-end;
+  margin-top: 40px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 36px;
+  gap: 10px;
+  background: #007298;
+  border-radius: 4px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
 }

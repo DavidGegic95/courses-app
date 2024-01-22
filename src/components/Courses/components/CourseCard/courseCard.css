@@ -1,96 +1,96 @@
 .course_card {
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(2px 0px 8px rgba(0, 0, 0, 0.25));
-	background: #ffffff;
-	border-left: 7px solid #333e48;
-	border-radius: 4px;
-	padding: 31px;
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	flex-direction: column;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 0px 8px rgba(0, 0, 0, 0.25));
+  background: #ffffff;
+  border-left: 7px solid #333e48;
+  border-radius: 4px;
+  padding: 31px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .section_course_card {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	width: 100%;
-	column-gap: 60px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  column-gap: 60px;
 }
 .section_2_house_card {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 .title_course_card {
-	font-family: 'Open Sans', sans-serif;
-	font-style: normal;
-	font-weight: 700;
-	font-size: 20px;
-	line-height: 32px;
-	/* identical to box height, or 160% */
-	text-transform: capitalize;
-	padding-bottom: 10px;
-	/* padding-left: 0; */
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 32px;
+  /* identical to box height, or 160% */
+  text-transform: capitalize;
+  padding-bottom: 10px;
+  /* padding-left: 0; */
 }
 
 .description_course_card {
-	font-family: 'Open Sans', sans-serif;
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
-	color: #333e48;
-	min-width: 35ch;
-	max-width: 60%;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333e48;
+  min-width: 35ch;
+  max-width: 60%;
 }
 
 .authors_course_card {
-	font-family: 'Open Sans', sans-serif;
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
-	color: #333e48;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333e48;
 }
 .authors_course_card > span {
-	font-weight: 700;
+  font-weight: 700;
 }
 .buttons-wrapper_course_card {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
-	height: 100%;
-	margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
 }
 
 .button_show_course {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	padding: 13px 36px;
-	background: #007298;
-	border-radius: 4px;
-	outline: none;
-	border: none;
-	font-family: 'Open Sans', sans-serif;
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	text-align: center;
-	text-transform: uppercase;
-	color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 36px;
+  background: #007298;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
 .icon_button {
-	border: none;
-	background-color: transparent;
-	outline: none;
+  border: none;
+  background-color: transparent;
+  outline: none;
 }

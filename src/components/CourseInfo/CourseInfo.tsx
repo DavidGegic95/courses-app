@@ -10,68 +10,68 @@ import './courseInfo.css';
 import { CourseType } from '../../store/courses/types';
 
 const CourseInfo = () => {
-	const { courseId } = useParams();
-	const navigate = useNavigate();
-	const coursesState = useSelector(getCourses);
-	const authorsState = useSelector(getAuthors);
-	const [courseInfoState, setCourseInfoState] = useState<CourseType>(
-		{} as CourseType
-	);
+  const { courseId } = useParams();
+  const navigate = useNavigate();
+  const coursesState = useSelector(getCourses);
+  const authorsState = useSelector(getAuthors);
+  const [courseInfoState, setCourseInfoState] = useState<CourseType>(
+    {} as CourseType
+  );
 
-	useEffect(() => {
-		const course = coursesState?.find((course) => course.id === courseId);
-		setCourseInfoState(course!);
-	}, [coursesState]);
+  useEffect(() => {
+    const course = coursesState?.find((course) => course.id === courseId);
+    setCourseInfoState(course!);
+  }, [coursesState]);
 
-	return (
-		<div className='courseInfo'>
-			<h2 className='title__coureInfo'>{courseInfoState?.title}</h2>
-			<div className='card-wrapper__courseInfo'>
-				<p className='description_title__courseInfo'>Description: </p>
-				<div className='inner-card-wrapper__courseInfo'>
-					<section className='section__description'>
-						<p className='description__course'>
-							{courseInfoState?.description}
-						</p>
-					</section>
-					<section className='section__info_course'>
-						<div className='info_course__static'>
-							<span className='span_info_bold'>ID: </span>
-							<span className='span_info_bold'>Duration: </span>
-							<span className='span_info_bold'>Created:</span>
-							<span className='span_info_bold'>Authors:</span>
-						</div>
-						<div className='info_course'>
-							<span className='span_info'>{courseInfoState?.id}</span>
-							<span className='span_info'>
-								<span className='span_bold_hours'>
-									{formatDuration(courseInfoState?.duration || 0)}
-								</span>{' '}
-								hours
-							</span>
-							<span className='span_info'>
-								{formatDate(courseInfoState?.creationDate || '')}
-							</span>
-							<span className='span_info'>
-								{courseInfoState?.authors?.map((e, index) => {
-									let format = '';
-									if (index !== courseInfoState.authors.length - 1) {
-										format = ', ';
-									}
-									return selectAuthor(e, authorsState) + format;
-								})}
-							</span>
-						</div>
-					</section>
-				</div>
-			</div>
-			<Button
-				name='back_button'
-				onClick={() => navigate('/courses')}
-				buttonText='BACK'
-			/>
-		</div>
-	);
+  return (
+    <div className='courseInfo'>
+      <h2 className='title__coureInfo'>{courseInfoState?.title}</h2>
+      <div className='card-wrapper__courseInfo'>
+        <p className='description_title__courseInfo'>Description: </p>
+        <div className='inner-card-wrapper__courseInfo'>
+          <section className='section__description'>
+            <p className='description__course'>
+              {courseInfoState?.description}
+            </p>
+          </section>
+          <section className='section__info_course'>
+            <div className='info_course__static'>
+              <span className='span_info_bold'>ID: </span>
+              <span className='span_info_bold'>Duration: </span>
+              <span className='span_info_bold'>Created:</span>
+              <span className='span_info_bold'>Authors:</span>
+            </div>
+            <div className='info_course'>
+              <span className='span_info'>{courseInfoState?.id}</span>
+              <span className='span_info'>
+                <span className='span_bold_hours'>
+                  {formatDuration(courseInfoState?.duration || 0)}
+                </span>{' '}
+                hours
+              </span>
+              <span className='span_info'>
+                {formatDate(courseInfoState?.creationDate || '')}
+              </span>
+              <span className='span_info'>
+                {courseInfoState?.authors?.map((e, index) => {
+                  let format = '';
+                  if (index !== courseInfoState.authors.length - 1) {
+                    format = ', ';
+                  }
+                  return selectAuthor(e, authorsState) + format;
+                })}
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <Button
+        name='back_button'
+        onClick={() => navigate('/courses')}
+        buttonText='BACK'
+      />
+    </div>
+  );
 };
 
 export default CourseInfo;

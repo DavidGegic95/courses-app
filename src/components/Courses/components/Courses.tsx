@@ -14,52 +14,52 @@ import { RootState } from '../../../store';
 import { v4 as uuidv4 } from 'uuid';
 
 const Courses = () => {
-	const coursesState = useSelector(getCourses);
-	const [searchQuery, setSearchQuery] = useState<string>('');
-	const userState = useSelector(getUser);
-	const dispatch =
-		useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
+  const coursesState = useSelector(getCourses);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const userState = useSelector(getUser);
+  const dispatch =
+    useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 
-	useEffect(() => {
-		dispatch(authorsThunkFunction());
-		dispatch(coursesThunkFunction());
-		if (localStorage.getItem('token')) {
-			dispatch(userThunkAction());
-		}
-	}, []);
+  useEffect(() => {
+    dispatch(authorsThunkFunction());
+    dispatch(coursesThunkFunction());
+    if (localStorage.getItem('token')) {
+      dispatch(userThunkAction());
+    }
+  }, []);
 
-	return (
-		<div className='courses_component'>
-			{coursesState?.length !== 0 ? (
-				<>
-					<div className='searchBar_link_wrapper'>
-						<SearchBar
-							searchQuery={searchQuery}
-							setSearchQuery={setSearchQuery}
-						/>
-						{userState.role === 'admin' && (
-							<Link className='addCourse_button' to={'/courses/add'}>
-								Add New Course
-							</Link>
-						)}
-					</div>
-					{coursesState?.map((e) => (
-						<CourseCard
-							key={e.id + uuidv4()}
-							courseId={e.id}
-							title={e.title}
-							duration={e.duration}
-							description={e.description}
-							authors={e.authors}
-							creationDate={e.creationDate}
-						/>
-					))}
-				</>
-			) : (
-				<EmptyCourseList />
-			)}
-		</div>
-	);
+  return (
+    <div className='courses_component'>
+      {coursesState?.length !== 0 ? (
+        <>
+          <div className='searchBar_link_wrapper'>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+            {userState.role === 'admin' && (
+              <Link className='addCourse_button' to={'/courses/add'}>
+                Add New Course
+              </Link>
+            )}
+          </div>
+          {coursesState?.map((e) => (
+            <CourseCard
+              key={e.id + uuidv4()}
+              courseId={e.id}
+              title={e.title}
+              duration={e.duration}
+              description={e.description}
+              authors={e.authors}
+              creationDate={e.creationDate}
+            />
+          ))}
+        </>
+      ) : (
+        <EmptyCourseList />
+      )}
+    </div>
+  );
 };
 
 export default Courses;

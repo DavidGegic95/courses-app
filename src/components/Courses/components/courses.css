@@ -1,33 +1,33 @@
 .courses_component {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	row-gap: 32px;
-	padding: 64px 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 32px;
+  padding: 64px 10%;
 }
 .searchBar_link_wrapper {
-	width: 100%;
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 .addCourse_button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-decoration: none;
-	padding: 0 16px;
-	height: 50px;
-	background: #007298;
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	text-align: center;
-	text-transform: uppercase;
-	border-radius: 4px;
-	color: #ffffff;
-	border: none;
-	outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 16px;
+  height: 50px;
+  background: #007298;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 4px;
+  color: #ffffff;
+  border: none;
+  outline: none;
 }

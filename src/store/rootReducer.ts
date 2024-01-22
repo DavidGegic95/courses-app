@@ -4,7 +4,7 @@ import { coursesReducer } from './courses/reducer';
 import { userReducer } from './user/reducer';
 
 export const rootReducer = combineReducers({
-	courses: coursesReducer,
-	user: userReducer,
-	authors: authorsReducer,
+  courses: coursesReducer,
+  user: userReducer,
+  authors: authorsReducer,
 });

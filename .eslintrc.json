@@ -50,5 +50,12 @@
     ],
     "@typescript-eslint/no-namespace": "off",
     "no-duplicate-imports": "error"
+  },
+  "globals": {
+    "jest": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "beforeEach": true
   }
 }

@@ -3,22 +3,26 @@ import './input.css';
 
 const Input = ({
 	placeholder,
-	setSearchQuery,
-	searchQuery,
+	handleInputData,
+	inputData,
+	inputName,
 }: {
 	placeholder: string;
-	setSearchQuery: (e: string) => void;
-	searchQuery: string;
+	handleInputData?: (e: string) => void;
+	inputData?: string;
+	inputName?: string;
 }) => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setSearchQuery(event.target.value);
+		handleInputData!(event.target.value);
 	};
 	return (
 		<input
+			className={inputName}
 			type='text'
 			placeholder={placeholder}
-			value={searchQuery}
+			value={inputData}
 			onChange={handleChange}
+			id={inputName}
 		/>
 	);
 };

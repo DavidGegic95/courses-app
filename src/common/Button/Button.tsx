@@ -1,36 +1,25 @@
 import React from 'react';
-type CourseInfoType = {
-	IdOfCourse: string;
-	title: string;
-	description: string;
-	duration: number;
-	listOfAuthors: string[];
-	creationDate: string;
-};
+import { ReactComponent as TrashIcon } from '../../assets/Icon-Trash.svg';
+import { ReactComponent as EditIcon } from '../../assets/Icon-Edit.svg';
 
 const Button = ({
 	buttonText,
 	name,
-	setCourseInfoState,
-	courseInfo,
-	courseInfoState,
+	onClick,
+	type,
+	courseId,
 }: {
 	buttonText: string;
 	name?: string;
-	setCourseInfoState?: (e: CourseInfoType | null) => void;
-	courseInfo?: CourseInfoType;
-	courseInfoState?: CourseInfoType;
+	onClick?: () => void;
+	type?: 'submit';
+	courseId?: string;
 }) => {
-	function onClickSetCourse() {
-		if (courseInfoState && buttonText === 'BACK') {
-			setCourseInfoState!(null);
-		} else if (courseInfo) {
-			setCourseInfoState!(courseInfo);
-		}
-	}
 	return (
-		<button onClick={onClickSetCourse} className={name}>
-			{buttonText}
+		<button type={type} onClick={onClick} className={name}>
+			{buttonText === 'trashIcon' && <TrashIcon key={courseId + 'trash'} />}
+			{buttonText === 'editIcon' && <EditIcon key={courseId + 'edit'} />}
+			{buttonText !== 'trashIcon' && buttonText !== 'editIcon' && buttonText}
 		</button>
 	);
 };

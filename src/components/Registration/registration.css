@@ -1,0 +1,107 @@
+.registration_page {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 100vh;
+}
+.title_registration_page {
+	margin-bottom: 32px;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 40px;
+	text-transform: capitalize;
+	color: #333e48;
+}
+
+.registration_card {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 77px 150px;
+	background-color: white;
+	row-gap: 32px;
+	border: 1px solid #cfcfcf;
+}
+.registration_form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	row-gap: 32px;
+}
+.registration_button {
+	width: 286px;
+	height: 50px;
+	outline: none;
+	border: none;
+	text-align: center;
+	text-transform: uppercase;
+	background: #007298;
+	border-radius: 4px;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 24px;
+	color: white;
+}
+.input-wrapper__registration {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.label__registration {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+	color: #333e48;
+}
+
+.name,
+.email,
+.password {
+	width: 286px;
+	height: 50px;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	color: #333e48;
+	border-radius: 3px 0px 0px 3px;
+	padding: 16px;
+	outline: none;
+	border: 1px solid #cfcfcf;
+}
+.link_wrapper {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 100%;
+	column-gap: 6px;
+	color: #333e48;
+}
+.link_p,
+.login_link {
+	color: #333e48;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 20px;
+	text-align: center;
+}
+
+.login_link {
+	text-decoration: none;
+	color: #333e48;
+	font-weight: 700;
+}

@@ -11,13 +11,13 @@ type mockedCourse = {
 };
 
 const SearchButton = ({
-	setCourseList,
+	// setCourseList,
 	searchQuery,
 	courseList,
 }: {
-	setCourseList: Dispatch<SetStateAction<mockedCourse[] | undefined>>;
+	setCourseList?: Dispatch<SetStateAction<mockedCourse[] | undefined>>;
 	searchQuery: string;
-	courseList: mockedCourse[] | undefined;
+	courseList?: mockedCourse[] | undefined;
 }) => {
 	function handleOnClick() {
 		const regex = new RegExp(searchQuery, 'gi');
@@ -31,8 +31,6 @@ const SearchButton = ({
 				}
 			}
 		}
-
-		setCourseList(searchedCourses);
 	}
 
 	return (

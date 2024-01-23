@@ -1,7 +1,25 @@
 .searchBar {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	column-gap: 16px;
-	align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 16px;
+  align-self: flex-start;
+}
+.input_search_bar {
+  width: 400px;
+  height: 50px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: black;
+  border: 1px solid #cfcfcf;
+  border-radius: 3px 0px 0px 3px;
+  outline: none;
+  background-color: white;
+  padding: 16px 13px;
+}
+.input_search_bar::placeholder {
+  color: #cfcfcf;
 }

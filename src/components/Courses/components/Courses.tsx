@@ -1,69 +1,66 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard/CourseCard';
-// import { mockedCoursesList } from '../../../constants';
-import './courses.css';
+import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
-type mockedCourse = {
-	id: string;
-	title: string;
-	duration: number;
-	description: string;
-	authors: string[];
-	creationDate: string;
-};
-type CourseInfoType = {
-	IdOfCourse: string;
-	title: string;
-	description: string;
-	duration: number;
-	listOfAuthors: string[];
-	creationDate: string;
-};
+import EmptyCourseList from '../../EmptyCourseList/EmptyCourseList';
+import { getCourses, getUser } from '../../../helpers/selectors';
+import { coursesThunkFunction } from '../../../store/courses/thunk';
+import { authorsThunkFunction } from '../../../store/authors/thunk';
+import './courses.css';
+import { userThunkAction } from '../../../store/user/thunk';
+import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import { RootState } from '../../../store';
+import { v4 as uuidv4 } from 'uuid';
 
-const Courses = ({
-	mockedCoursesList,
-	setCourseInfoState,
-}: {
-	mockedCoursesList: mockedCourse[];
-	setCourseInfoState: (arr: CourseInfoType | null) => void;
-}) => {
-	const [courseList, setCourseList] = useState<mockedCourse[]>();
-	const [searchQuery, setSearchQuery] = useState<string>('');
+const Courses = () => {
+  const coursesState = useSelector(getCourses);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const token = localStorage.getItem('token');
+  const userState = useSelector(getUser);
+  const dispatch =
+    useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
 
-	useEffect(() => {
-		setCourseList(mockedCoursesList);
-	}, []);
-	useEffect(() => {
-		if (searchQuery === '') {
-			setCourseList(mockedCoursesList);
-		}
-	}, [searchQuery]);
-	return (
-		<div className='courses_component'>
-			<SearchBar
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-				courseList={courseList}
-				setCourseList={setCourseList}
-			/>
-			{courseList?.length !== 0 ? (
-				courseList?.map((e) => (
-					<CourseCard
-						setCourseInfoState={setCourseInfoState}
-						key={e.id}
-						courseId={e.id}
-						title={e.title}
-						duration={e.duration}
-						description={e.description}
-						authors={e.authors}
-						creationDate={e.creationDate}
-					/>
-				))
-			) : (
-				<p>No results match your search criteria.</p>
-			)}
-		</div>
-	);
+  useEffect(() => {
+    dispatch(authorsThunkFunction());
+    dispatch(coursesThunkFunction());
+    if (token) {
+      dispatch(userThunkAction());
+    }
+  }, []);
+
+  return (
+    <div className='courses_component'>
+      {coursesState?.length !== 0 ? (
+        <>
+          <div className='searchBar_link_wrapper'>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+            {userState.role === 'admin' && (
+              <Link className='addCourse_button' to={'/courses/add'}>
+                Add New Course
+              </Link>
+            )}
+          </div>
+          {coursesState?.map((e) => (
+            <CourseCard
+              key={e.id + uuidv4()}
+              courseId={e.id}
+              title={e.title}
+              duration={e.duration}
+              description={e.description}
+              authors={e.authors}
+              creationDate={e.creationDate}
+            />
+          ))}
+        </>
+      ) : (
+        <EmptyCourseList />
+      )}
+    </div>
+  );
 };
 
 export default Courses;

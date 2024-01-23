@@ -1,22 +1,39 @@
 header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 16px;
-	border-bottom: 1px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
 }
 .button_header {
-	background: #007298;
-	border-radius: 4px;
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 24px;
-	text-align: center;
-	text-transform: uppercase;
-	color: #ffffff;
-	border: none;
-	outline: none;
-	padding: 13px 36px;
+  background: #007298;
+  border-radius: 4px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  padding: 13px 36px;
+}
+
+.logout_user_wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.user_name {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  color: #333e48;
 }

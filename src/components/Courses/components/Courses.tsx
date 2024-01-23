@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Courses = () => {
   const coursesState = useSelector(getCourses);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const token = localStorage.getItem('token');
   const userState = useSelector(getUser);
   const dispatch =
     useDispatch<ThunkDispatch<RootState, unknown, UnknownAction>>();
@@ -23,7 +24,7 @@ const Courses = () => {
   useEffect(() => {
     dispatch(authorsThunkFunction());
     dispatch(coursesThunkFunction());
-    if (localStorage.getItem('token')) {
+    if (token) {
       dispatch(userThunkAction());
     }
   }, []);

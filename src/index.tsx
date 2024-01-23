@@ -8,7 +8,7 @@ import Registration from './components/Registration/Registration';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import Courses from './components/Courses/components/Courses';
 import Header from './components/Header/Header';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import { Provider } from 'react-redux';
 import store from './store';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
@@ -25,7 +25,7 @@ root.render(
           path='/courses/add'
           element={
             <PrivateRoute>
-              <CreateCourse />
+              <CourseForm />
             </PrivateRoute>
           }
         />
@@ -33,7 +33,7 @@ root.render(
           path='/courses/update/:courseId'
           element={
             <PrivateRoute>
-              <CreateCourse />
+              <CourseForm />
             </PrivateRoute>
           }
         />

@@ -1,7 +1,7 @@
-.createCourse_page {
+.CourseForm_page {
   padding: 54px 10%;
 }
-.title_createCourse_page {
+.title_CourseForm_page {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
@@ -12,7 +12,7 @@
   margin-bottom: 32px;
 }
 
-.container_createCourse {
+.container_CourseForm {
   padding: 42px 80px;
   background-color: white;
   row-gap: 16px;
@@ -61,7 +61,7 @@
   padding: 16px;
   color: black;
 }
-.titles_container_createCourse {
+.titles_container_CourseForm {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
@@ -81,7 +81,7 @@
   align-items: center;
   color: #333e48;
 }
-.subtitle_container_createCourse {
+.subtitle_container_CourseForm {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
@@ -136,8 +136,8 @@
   flex-direction: column;
 }
 
-.create_course_button__createCourse,
-.cancel_button__createCourse {
+.create_course_button__CourseForm,
+.cancel_button__CourseForm {
   height: 50px;
   padding: 13px 36px;
   gap: 10px;

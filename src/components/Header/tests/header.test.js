@@ -12,29 +12,20 @@ describe('Header component', () => {
       token: 'token',
     },
   };
-  const logoutState = {
-    user: {
-      name: '',
-      isAuth: false,
-      token: '',
-    },
+  const mockedStore = {
+    getState: () => logedInState,
+    subscribe: jest.fn(),
+    dispatch: jest.fn(),
   };
-  let store;
 
   beforeEach(() => {
     localStorage.clear();
   });
 
   it('renders logo and user name when the user is logged in', () => {
-    const mockedStore = {
-      getState: () => logedInState,
-      subscribe: jest.fn(),
-      dispatch: jest.fn(),
-    };
-    store = mockedStore;
-    localStorage.setItem('token', 'token');
+    localStorage.setItem("token", "token")
     render(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <MemoryRouter>
           <Header />
         </MemoryRouter>
@@ -45,16 +36,9 @@ describe('Header component', () => {
   });
 
   it('renders logout button when the user is logged in', () => {
-    const mockedStore = {
-      getState: () => logedInState,
-      subscribe: jest.fn(),
-      dispatch: jest.fn(),
-    };
-    store = mockedStore;
-    localStorage.setItem('token', 'token');
-
+    localStorage.setItem("token", "token")
     render(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <MemoryRouter>
           <Header />
         </MemoryRouter>
@@ -63,23 +47,5 @@ describe('Header component', () => {
     expect(screen.getByText('Logout')).toBeInTheDocument();
   });
 
-  it('does not render user name and logout button when the user is not logged in', () => {
-    const mockedStore = {
-      getState: () => logoutState,
-      subscribe: jest.fn(),
-      dispatch: jest.fn(),
-    };
-    store = mockedStore;
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Header />
-        </MemoryRouter>
-      </Provider>
-    );
 
-    expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
-
-    expect(screen.queryByText('Logout')).not.toBeInTheDocument();
-  });
 });

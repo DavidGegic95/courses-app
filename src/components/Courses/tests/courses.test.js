@@ -3,7 +3,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Courses from '../components/Courses';
 import { initialState } from './mockedInitialTest';
-import CreateCourse from '../../CreateCourse/CreateCourse';
+import CourseForm from '../../CourseForm/CourseForm';
 
 describe('Courses component', () => {
   const mockedStore = {
@@ -14,9 +14,8 @@ describe('Courses component', () => {
 
   describe('Courses component', () => {
     it('should display the correct number of CourseCard components', () => {
-      const store = mockedStore;
       render(
-        <Provider store={store}>
+        <Provider store={mockedStore}>
           <MemoryRouter>
             <Courses />
           </MemoryRouter>
@@ -29,13 +28,12 @@ describe('Courses component', () => {
     });
   });
   it(" CourseForm should be shown after a click on the 'Add new course' button.", async () => {
-    const store = mockedStore;
     render(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <MemoryRouter initialEntries={['/courses']}>
           <Routes>
             <Route path='/courses' element={<Courses />} />
-            <Route path='/courses/add' element={<CreateCourse />} />
+            <Route path='/courses/add' element={<CourseForm />} />
           </Routes>
         </MemoryRouter>
       </Provider>
@@ -44,7 +42,7 @@ describe('Courses component', () => {
     const addCourseButton = screen.getByText('Add New Course');
     fireEvent.click(addCourseButton);
 
-    const createCourseComponent = screen.getByTestId('create-course');
-    expect(createCourseComponent).toBeInTheDocument();
+    const CourseFormComponent = screen.getByTestId('create-course');
+    expect(CourseFormComponent).toBeInTheDocument();
   });
 });

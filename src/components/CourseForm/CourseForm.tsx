@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import CreateInput from '../../common/CreateInput/CreateInput';
-import './createCourse.css';
+import './courseForm.css';
 import { formatDuration } from '../../helpers/getCourseDuration';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
@@ -19,7 +19,7 @@ import {
 import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
-const CreateCourse = () => {
+const CourseForm = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const dispatch =
@@ -114,7 +114,7 @@ const CreateCourse = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
   };
 
-  const createCourse = async () => {
+  const CourseForm = async () => {
     const titleValidation = courseData.title.length >= 2;
     const descriptionValidation = courseData.description.length >= 2;
     const durationValidation = courseData.duration > 0;
@@ -155,10 +155,10 @@ const CreateCourse = () => {
   };
 
   return (
-    <div className='createCourse_page'>
-      <h2 className='title_createCourse_page'>Course Edit/Create Page</h2>
-      <div data-testid='create-course' className='container_createCourse'>
-        <p className='titles_container_createCourse'>Main info</p>
+    <div className='CourseForm_page'>
+      <h2 className='title_CourseForm_page'>Course Edit/Create Page</h2>
+      <div data-testid='create-course' className='container_CourseForm'>
+        <p className='titles_container_CourseForm'>Main info</p>
         <CreateInput
           id='title'
           placeholder='Input title'
@@ -180,7 +180,7 @@ const CreateCourse = () => {
           <p className='error_text'>{errors.description}</p>
         )}
 
-        <p className='titles_container_createCourse'>Duration</p>
+        <p className='titles_container_CourseForm'>Duration</p>
         <div className='duration_container'>
           <div>
             <CreateInput
@@ -198,7 +198,7 @@ const CreateCourse = () => {
             {formatDuration(courseData.duration)} hours
           </span>
         </div>
-        <p className='titles_container_createCourse'>Authors</p>
+        <p className='titles_container_CourseForm'>Authors</p>
         <div className='authors_container'>
           <CreateInput
             id='authors'
@@ -219,9 +219,9 @@ const CreateCourse = () => {
             buttonText='Create Author'
           />
           <div>
-            <p className='titles_container_createCourse'>Course Authors</p>
+            <p className='titles_container_CourseForm'>Course Authors</p>
             {courseData.authors.length === 0 ? (
-              <span className='subtitle_container_createCourse'>
+              <span className='subtitle_container_CourseForm'>
                 Author list is empty
               </span>
             ) : (
@@ -260,12 +260,12 @@ const CreateCourse = () => {
       <div className='cancel_create_buttons_container'>
         <Button
           onClick={() => navigate('/courses')}
-          name='cancel_button__createCourse'
+          name='cancel_button__CourseForm'
           buttonText='CANCEL'
         />
         <Button
-          onClick={createCourse}
-          name='create_course_button__createCourse'
+          onClick={CourseForm}
+          name='create_course_button__CourseForm'
           buttonText={!courseId ? 'CREATE COURSE' : 'EDIT COURSE'}
         />
       </div>
@@ -273,4 +273,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CourseForm;
